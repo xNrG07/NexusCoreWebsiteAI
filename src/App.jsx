@@ -124,6 +124,14 @@ const colorMap = {
   },
 };
 
+const formatExactZeros = (value) => {
+  const num = Number.parseFloat(String(value).replace(',', '.'));
+  if (Number.isNaN(num)) return String(value);
+  let str = num.toFixed(20);
+  str = str.replace(/\.?0+$/, '');
+  return str === '' ? '0' : str;
+};
+
 const formatProbability = (value) => {
   const num = Number.parseFloat(String(value).replace(',', '.'));
   if (Number.isNaN(num)) return 'Unbekannt';
@@ -184,6 +192,7 @@ const App = () => {
       const mappedTimelines = (geminiData?.timelines || []).slice(0, 3).map((timeline, index) => {
         const mappedId = ['ALPHA', 'BETA', 'OMEGA'][index] || timeline.id || `TL-${index}`;
         const rawProbability = Number.parseFloat(String(timeline.probability).replace(',', '.'));
+
         return {
           id: mappedId,
           type: timeline.type || mappedId,
@@ -192,7 +201,7 @@ const App = () => {
           probability: formatProbability(timeline.probability),
           probabilityTooltip: Number.isNaN(rawProbability)
             ? 'Von der KI gelieferter Prozentwert nicht verfügbar'
-            : `Von der KI gelieferter Prozentwert: ${rawProbability}%`,
+            : `Von der KI gelieferter Prozentwert: ${formatExactZeros(rawProbability)} %`,
         };
       });
 
@@ -276,231 +285,154 @@ const App = () => {
         </div>
       </header>
 
-      <main id="top" className="relative z-10 mx-auto flex max-w-6xl flex-col gap-10 px-4 pb-16 pt-8 sm:px-6 sm:pt-10 lg:gap-14">
-        <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-emerald-300">
-              <Activity size={14} /> System online
-            </div>
-            <div className="space-y-4">
-              <h1 className="max-w-4xl text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Eine kleine Handlung. Drei völlig andere Zeitlinien.
-              </h1>
-              <p className="max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
-                NEXUS.core ist ein interaktives KI-Unterhaltungstool. Du gibst eine kleine Alltagshandlung ein und erhältst drei alternative Zukunftsverläufe – von nachvollziehbar bis völlig eskaliert.
-              </p>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-purple-300">
-                  <GitBranch size={14} /> Kreativ
-                </div>
-                <p className="text-sm leading-6 text-slate-300">
-                  Gut für Story-Ideen, Social Posts und absurde Gedankenspiele.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-blue-300">
-                  <Shield size={14} /> Transparent
-                </div>
-                <p className="text-sm leading-6 text-slate-300">
-                  Klare Hinweise zur Nutzung, Technik und zum Umgang mit Eingaben.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-300">
-                  <Zap size={14} /> Schnell
-                </div>
-                <p className="text-sm leading-6 text-slate-300">
-                  Die Ausgabe erscheint in wenigen Sekunden direkt im Browser.
-                </p>
-              </div>
-            </div>
+      <main id="top" className="relative z-10 mx-auto flex max-w-6xl flex-col gap-12 px-4 pb-24 pt-8 sm:px-6 sm:pt-16 lg:gap-20">
+        <section id="tool" className="mx-auto mt-2 flex w-full max-w-4xl flex-col items-center text-center sm:mt-8">
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)] sm:text-xs">
+            <Activity size={14} className="animate-pulse" /> System online
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 to-white/5 p-6 shadow-2xl shadow-black/30">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-purple-500/15 text-purple-300">
-                <Terminal size={20} />
+          <h1 className="mb-6 max-w-4xl bg-gradient-to-b from-white to-slate-400 bg-clip-text text-5xl font-black leading-[1.1] tracking-tight text-transparent sm:text-6xl lg:text-7xl">
+            Eine kleine Handlung.<br className="hidden sm:block" /> Drei völlig andere Zeitlinien.
+          </h1>
+
+          <p className="mb-12 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+            NEXUS.core ist ein interaktives KI-Unterhaltungstool. Du gibst eine kleine Alltagshandlung ein und erhältst drei alternative Zukunftsverläufe – von nachvollziehbar bis völlig eskaliert.
+          </p>
+
+          <div className="relative z-20 w-full">
+            {errorMsg && (
+              <div className="mb-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-left text-sm leading-7 text-red-200">
+                {errorMsg}
               </div>
-              <div>
-                <div className="text-sm font-black uppercase tracking-[0.18em] text-white">
-                  Vor dem Start wichtig
-                </div>
-                <div className="text-xs uppercase tracking-[0.16em] text-slate-500">
-                  Nutzung & Datenschutz
+            )}
+
+            <form onSubmit={handleAnalyze} className="w-full space-y-4 animate-in fade-in zoom-in-95 duration-500">
+              <div className="group relative">
+                <div className="absolute inset-0 rounded-[32px] bg-gradient-to-r from-purple-600/30 to-blue-600/30 opacity-40 blur-xl transition-opacity duration-500 group-hover:opacity-80" />
+                <div className="relative rounded-[32px] border border-white/10 bg-[#0a0f18]/80 p-2 shadow-2xl backdrop-blur-2xl transition-all hover:border-purple-500/30 sm:p-3">
+                  <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+                    <div className="flex flex-1 items-center gap-3 rounded-3xl px-4 py-3">
+                      <Terminal size={24} className="hidden shrink-0 text-purple-400 sm:block" />
+                      <input
+                        type="text"
+                        value={decision}
+                        onChange={(e) => setDecision(e.target.value)}
+                        maxLength={180}
+                        minLength={5}
+                        required
+                        placeholder="z. B.: Ich habe heute einer unbekannten Person geholfen"
+                        className="w-full bg-transparent py-2 text-center text-base font-medium text-white outline-none placeholder:text-slate-500 sm:text-left sm:text-lg"
+                      />
+                    </div>
+
+                    <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+                      <button
+                        type="button"
+                        onClick={fillRandom}
+                        className="rounded-3xl border border-white/10 bg-white/5 px-6 py-4 text-sm font-bold text-slate-300 transition hover:bg-white/10 hover:text-white"
+                      >
+                        Zufall
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={step === 'analyzing' || decision.trim().length < 5}
+                        className="flex items-center justify-center gap-2 rounded-3xl bg-white px-8 py-4 text-sm font-black uppercase tracking-[0.14em] text-slate-900 transition hover:bg-purple-300 hover:shadow-[0_0_20px_rgba(216,180,254,0.4)] disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        Simulieren <Sparkles size={18} />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="space-y-3 text-sm leading-7 text-slate-300">
-              <p>Bitte keine sensiblen persönlichen Daten, Zugangsdaten, Gesundheitsdaten oder vertraulichen Inhalte eingeben.</p>
-              <p>Die Eingaben werden zur Generierung serverseitig an Google Gemini weitergeleitet. Die Ergebnisse sind fiktional und können sachlich falsch sein.</p>
-              <p>Die Ausgaben dienen der Unterhaltung und kreativen Inspiration, nicht der Beratung oder echten Entscheidungsfindung.</p>
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={() => setModal('transparenz')}
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-bold uppercase tracking-[0.16em] text-white transition hover:bg-white/10"
-              >
-                Transparenz lesen
-              </button>
-              <a
-                href="/datenschutz.html"
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs font-bold uppercase tracking-[0.16em] text-slate-300 transition hover:bg-white/10 hover:text-white"
-              >
-                Datenschutz öffnen
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section id="tool" className="rounded-[28px] border border-white/10 bg-[#0c1118]/90 p-5 shadow-2xl shadow-black/25 sm:p-7 lg:p-8">
-          <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div className="space-y-2">
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-purple-300">Interaktives Tool</div>
-              <h2 className="text-2xl font-black text-white sm:text-3xl">Simuliere deine Eingabe</h2>
-              <p className="max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
-                Beschreibe eine kleine Handlung in einem kurzen Satz. Das Tool erzeugt drei alternative Verläufe und stellt sie als lesbare Karten dar.
-              </p>
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-amber-300">
-              <AlertTriangle size={14} /> KI-Ausgabe, keine Tatsachenbehauptung
-            </div>
-          </div>
-
-          {errorMsg && (
-            <div className="mb-5 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm leading-7 text-red-200">
-              {errorMsg}
-            </div>
-          )}
-
-          <form onSubmit={handleAnalyze} className="space-y-4">
-            <div className="rounded-3xl border border-white/10 bg-[#111722] p-2 shadow-lg shadow-black/20">
-              <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
-                <div className="flex flex-1 items-center gap-3 rounded-2xl px-3 py-2">
-                  <Terminal size={18} className="shrink-0 text-purple-400" />
-                  <input
-                    type="text"
-                    value={decision}
-                    onChange={(e) => setDecision(e.target.value)}
-                    maxLength={180}
-                    minLength={5}
-                    required
-                    placeholder="z. B.: Ich habe heute einer unbekannten Person geholfen"
-                    className="w-full bg-transparent py-3 text-base text-white outline-none placeholder:text-slate-500 sm:text-lg"
-                  />
-                </div>
-                <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
+                <span className="mr-2 hidden text-[10px] font-bold uppercase tracking-widest sm:block">Ideen:</span>
+                {samplePrompts.slice(0, 3).map((item) => (
                   <button
+                    key={item}
                     type="button"
-                    onClick={fillRandom}
-                    className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-bold text-slate-200 transition hover:bg-white/10"
+                    onClick={() => setDecision(item)}
+                    className="rounded-full border border-white/10 bg-white/5 px-4 py-2 transition hover:border-purple-400/30 hover:bg-purple-500/10 hover:text-purple-200"
                   >
-                    Zufallsbeispiel
+                    {item}
                   </button>
-                  <button
-                    type="submit"
-                    disabled={step === 'analyzing' || decision.trim().length < 5}
-                    className="rounded-2xl bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-slate-900 transition hover:bg-purple-300 disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    Simulation starten
-                  </button>
-                </div>
+                ))}
               </div>
-            </div>
-
-            <div className="flex flex-wrap gap-2 text-xs text-slate-400">
-              {samplePrompts.map((item) => (
-                <button
-                  key={item}
-                  type="button"
-                  onClick={() => setDecision(item)}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-2 transition hover:border-purple-400/30 hover:bg-purple-500/10 hover:text-purple-200"
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          </form>
+            </form>
+          </div>
 
           {step === 'analyzing' && (
-            <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-6 text-center">
-              <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full border border-purple-400/30 bg-purple-500/10">
-                <Fingerprint size={28} className="animate-pulse text-purple-300" />
+            <div className="mt-12 w-full max-w-xl animate-in zoom-in rounded-[32px] border border-white/10 bg-[#0a0f18]/80 p-8 text-center shadow-2xl backdrop-blur-xl duration-300">
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-purple-400/30 bg-purple-500/10">
+                <Fingerprint size={32} className="animate-pulse text-purple-300" />
               </div>
               <div className="mb-2 text-xl font-black uppercase tracking-[0.18em] text-white">
                 Zeitlinien werden erzeugt
               </div>
-              <p className="mx-auto mb-5 max-w-xl text-sm leading-7 text-slate-300">
-                NEXUS verarbeitet die Eingabe und erstellt drei alternative Verläufe. Das dauert normalerweise nur einen kurzen Moment.
+              <p className="mx-auto mb-6 max-w-sm text-sm leading-7 text-slate-400">
+                NEXUS verarbeitet die Eingabe und erstellt drei alternative Verläufe.
               </p>
-              <div className="mx-auto h-3 max-w-xl overflow-hidden rounded-full bg-slate-800">
+              <div className="mx-auto h-3 w-full overflow-hidden rounded-full bg-slate-800">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300"
                   style={{ width: `${loadingProgress}%` }}
                 />
               </div>
-              <div className="mt-3 text-sm font-bold text-slate-400">{loadingProgress}%</div>
+              <div className="mt-3 text-sm font-bold text-slate-500">{loadingProgress}%</div>
             </div>
           )}
 
           {results && step === 'results' && (
-            <div id="results-section" className="mt-8 space-y-5">
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6">
-                <div className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+            <div id="results-section" className="mt-16 w-full animate-in space-y-8 slide-in-from-bottom-12 text-left duration-700">
+              <div className="rounded-[32px] border border-white/5 bg-[#0a0f18]/80 p-6 text-center backdrop-blur-xl sm:p-8">
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                   Ausgangsaktion
                 </div>
-                <div className="text-lg font-semibold leading-8 text-white sm:text-2xl">
+                <div className="text-xl font-semibold italic leading-relaxed text-white sm:text-3xl">
                   „{results.original}“
                 </div>
               </div>
 
-              <div className="grid gap-4 lg:grid-cols-3">
+              <div className="grid gap-6 lg:grid-cols-3">
                 {results.timelines.map((timeline) => {
                   const scheme = colorMap[timeline.id] || colorMap.ALPHA;
                   return (
                     <article
                       key={timeline.id}
-                      className={`relative overflow-hidden rounded-3xl border bg-[#111722] p-5 shadow-xl shadow-black/20 ${scheme.ring}`}
+                      className={`group relative overflow-hidden rounded-[32px] border bg-[#0a0f18] p-6 shadow-2xl transition-transform hover:-translate-y-2 sm:p-8 ${scheme.ring}`}
                     >
-                      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${scheme.glow}`} />
+                      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-50 transition-opacity group-hover:opacity-100 ${scheme.glow}`} />
                       <div className="relative">
-                        <div className="mb-4 flex items-start justify-between gap-3">
+                        <div className="mb-6 flex items-start justify-between gap-3">
                           <div>
-                            <div
-                              className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] ${scheme.badge}`}
-                            >
-                              {timeline.id}
+                            <div className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] ${scheme.badge}`}>
+                              <span className="h-1.5 w-1.5 rounded-full bg-current" /> {timeline.id}
                             </div>
-                            <div className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-slate-400">
+                            <div className="mt-3 text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
                               {timeline.type}
                             </div>
                           </div>
                           <button
                             type="button"
                             onClick={() => handleCopy(timeline)}
-                            className="rounded-xl border border-white/10 bg-white/5 p-2 text-slate-300 transition hover:bg-white/10 hover:text-white"
+                            className="rounded-xl border border-white/10 bg-white/5 p-2.5 text-slate-400 transition hover:bg-white/10 hover:text-white"
                             title="Text kopieren"
                           >
-                            {copiedId === timeline.id ? <Check size={18} /> : <Copy size={18} />}
+                            {copiedId === timeline.id ? <Check size={18} className="text-emerald-400" /> : <Copy size={18} />}
                           </button>
                         </div>
 
                         <h3 className={`mb-4 text-2xl font-black leading-tight ${scheme.text}`}>
                           {timeline.title}
                         </h3>
-                        <p className="mb-5 text-sm leading-7 text-slate-300">{timeline.desc}</p>
+                        <p className="mb-8 text-sm leading-relaxed text-slate-300">{timeline.desc}</p>
 
-                        <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm">
-                          <span className="font-bold uppercase tracking-[0.14em] text-slate-400">
+                        <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-5 py-4 text-sm">
+                          <span className="font-bold uppercase tracking-[0.16em] text-slate-500">
                             Einordnung
                           </span>
                           <span
-                            className="cursor-help border-b border-dashed border-white/40 pb-0.5 font-black text-white transition-colors hover:border-white"
+                            className="cursor-help border-b border-dashed border-white/20 pb-0.5 font-black text-white transition-colors hover:border-white"
                             title={timeline.probabilityTooltip}
                           >
                             {timeline.probability}
@@ -512,18 +444,18 @@ const App = () => {
                 })}
               </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="flex flex-col justify-center gap-3 pt-4 sm:flex-row">
                 <button
                   type="button"
                   onClick={resetSimulation}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-700 bg-transparent px-8 py-4 text-sm font-bold text-white transition hover:border-purple-500 hover:bg-purple-500/10"
                 >
                   <RefreshCw size={16} /> Neue Aktion testen
                 </button>
                 <button
                   type="button"
                   onClick={() => setModal('transparenz')}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-purple-500/20 bg-purple-500/10 px-5 py-3 text-sm font-bold text-purple-200 transition hover:bg-purple-500/15"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-purple-500/20 bg-purple-500/10 px-8 py-4 text-sm font-bold text-purple-200 transition hover:bg-purple-500/15"
                 >
                   <Info size={16} /> Transparenz & Nutzung
                 </button>
@@ -532,15 +464,15 @@ const App = () => {
           )}
         </section>
 
-        <section id="was-ist-das" className="grid gap-6 lg:grid-cols-[1fr_1fr]">
-          <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-7">
-            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
-              Was ist NEXUS?
+        <section id="was-ist-das" className="mt-8 grid gap-6 lg:grid-cols-2">
+          <div className="rounded-[32px] border border-white/5 bg-[#0a0f18] p-8 sm:p-10">
+            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400">
+              <Sparkles size={24} />
             </div>
             <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">
               Ein spielerisches Was-wäre-wenn-Tool
             </h2>
-            <div className="space-y-4 text-sm leading-8 text-slate-300 sm:text-base">
+            <div className="space-y-4 text-sm leading-relaxed text-slate-400 sm:text-base">
               <p>
                 NEXUS.core nimmt eine kleine Alltagshandlung und denkt sie in drei unterschiedliche Richtungen weiter. So entstehen kurze alternative Zeitlinien mit unterschiedlicher Eskalationsstufe.
               </p>
@@ -550,9 +482,9 @@ const App = () => {
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-7">
-            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-purple-300">
-              So funktioniert es
+          <div className="rounded-[32px] border border-white/5 bg-[#0a0f18] p-8 sm:p-10">
+            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-400">
+              <GitBranch size={24} />
             </div>
             <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">
               Ablauf in drei Schritten
@@ -563,11 +495,11 @@ const App = () => {
                 'Die Eingabe wird an den eigenen Server-Endpunkt gesendet und von dort an Google Gemini weitergegeben.',
                 'NEXUS formatiert die Antwort in drei lesbare Zeitlinien mit unterschiedlichen Verläufen.',
               ].map((item, index) => (
-                <div key={item} className="flex gap-4 rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-sm font-black text-white">
+                <div key={item} className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/5 p-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-sm font-black text-white">
                     {index + 1}
                   </div>
-                  <p className="text-sm leading-7 text-slate-300">{item}</p>
+                  <p className="text-sm leading-6 text-slate-300">{item}</p>
                 </div>
               ))}
             </div>
@@ -578,88 +510,44 @@ const App = () => {
           {valuePoints.map((point) => {
             const Icon = point.icon;
             return (
-              <article key={point.title} className="rounded-[28px] border border-white/10 bg-white/5 p-6">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-purple-300">
-                  <Icon size={22} />
+              <article key={point.title} className="rounded-[32px] border border-white/5 bg-[#0a0f18] p-8">
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 text-emerald-400">
+                  <Icon size={26} />
                 </div>
                 <h3 className="mb-3 text-xl font-black text-white">{point.title}</h3>
-                <p className="text-sm leading-7 text-slate-300">{point.text}</p>
+                <p className="text-sm leading-relaxed text-slate-400">{point.text}</p>
               </article>
             );
           })}
         </section>
 
-        <section id="faq" className="rounded-[28px] border border-white/10 bg-[#0c1118]/90 p-6 sm:p-8">
-          <div className="mb-6 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-300">
-              <Sparkles size={20} />
-            </div>
-            <div>
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">FAQ</div>
-              <h2 className="text-2xl font-black text-white sm:text-3xl">Häufige Fragen</h2>
-            </div>
+        <section id="faq" className="rounded-[32px] border border-white/5 bg-[#0a0f18] p-8 sm:p-12">
+          <div className="mb-10 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-blue-400">FAQ</div>
+            <h2 className="text-3xl font-black text-white sm:text-4xl">Häufige Fragen</h2>
           </div>
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid gap-6 lg:grid-cols-2">
             {faqItems.map((item) => (
-              <article key={item.q} className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                <h3 className="mb-3 text-lg font-black text-white">{item.q}</h3>
-                <p className="text-sm leading-7 text-slate-300">{item.a}</p>
+              <article key={item.q} className="rounded-[24px] border border-white/5 bg-white/5 p-6">
+                <h3 className="mb-3 text-lg font-bold text-white">{item.q}</h3>
+                <p className="text-sm leading-relaxed text-slate-400">{item.a}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-7">
-            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-300">
-              Einsatzideen
-            </div>
-            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">
-              Wofür die Seite sinnvoll ist
-            </h2>
-            <div className="space-y-4 text-sm leading-8 text-slate-300 sm:text-base">
-              <p>Nutze das Tool als kleine Unterhaltung mit Freunden oder als Ausgangspunkt für absurde Gespräche und Ideen.</p>
-              <p>Für Autorinnen, Autoren oder Pen-and-Paper-Spieler kann NEXUS.core ein schneller Impulsgeber für neue Szenen, Plots und Wendungen sein.</p>
-              <p>Außerdem zeigt das Format auf einfache Weise, wie kreativ moderne Sprachmodelle mit kurzen Eingaben umgehen können.</p>
-            </div>
-          </div>
-
-          <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-7">
-            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-300">
-              Wichtige Grenze
-            </div>
-            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">
-              Nur ein Gedankenexperiment
-            </h2>
-            <div className="space-y-3 text-sm leading-7 text-slate-300">
-              {[
-                'Die generierten Zeitlinien sind fiktional.',
-                'NEXUS liefert keine echten Vorhersagen, Lebensberatung oder Tatsachenbehauptungen.',
-                'Bitte verwende das Tool nicht, um echte, schwerwiegende Entscheidungen zu treffen.',
-                'Sensible oder persönliche Daten sollten nicht in den Simulator eingegeben werden.',
-              ].map((item) => (
-                <div key={item} className="flex gap-3 rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <Info size={18} className="mt-1 shrink-0 text-amber-300" />
-                  <p>{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="rounded-[30px] border border-white/10 bg-gradient-to-br from-purple-600/15 to-blue-600/10 p-6 sm:p-8">
-          <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+        <section className="rounded-[32px] border border-white/10 bg-gradient-to-br from-purple-900/20 to-blue-900/10 p-8 sm:p-12">
+          <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div>
-              <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-purple-300">
-                Kontakt & Rechtliches
+              <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-purple-400">Kontakt & Nutzung</div>
+              <h2 className="mb-6 text-3xl font-black text-white sm:text-4xl">Klar und nachvollziehbar</h2>
+              <div className="space-y-4 text-sm leading-relaxed text-slate-300">
+                <p>Bitte gib keine sensiblen Daten ein, da Inhalte zur Generierung an externe KI-Dienste weitergeleitet werden.</p>
+                <p>Alle generierten Zeitlinien dienen der Unterhaltung und stellen keine verlässliche Grundlage für echte Lebensentscheidungen dar.</p>
+                <p>Weitere Informationen zum Betreiber, zur Datenverarbeitung und zu den Kontaktmöglichkeiten findest du auf den verlinkten Pflichtseiten.</p>
               </div>
-              <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">
-                Klar und nachvollziehbar
-              </h2>
-              <p className="max-w-3xl text-sm leading-8 text-slate-200 sm:text-base">
-                Informationen zum Betreiber, zum Datenschutz und zu den Kontaktmöglichkeiten findest du auf den verlinkten Seiten. So ist klar erkennbar, wer hinter dem Projekt steht und wie die Website funktioniert.
-              </p>
             </div>
+
             <div className="grid gap-3">
               {[
                 { href: '/impressum.html', label: 'Impressum öffnen' },
@@ -669,18 +557,18 @@ const App = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="inline-flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-5 py-4 text-sm font-bold text-white transition hover:bg-black/30"
+                  className="inline-flex items-center justify-between rounded-2xl border border-white/10 bg-black/40 px-6 py-4 text-sm font-bold text-white transition hover:border-purple-500/50 hover:bg-black/60"
                 >
                   <span>{link.label}</span>
-                  <ExternalLink size={16} />
+                  <ExternalLink size={16} className="text-slate-500" />
                 </a>
               ))}
               <button
                 type="button"
                 onClick={() => setModal('transparenz')}
-                className="inline-flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-5 py-4 text-sm font-bold text-white transition hover:bg-black/30"
+                className="inline-flex items-center justify-between rounded-2xl border border-purple-500/30 bg-purple-500/20 px-6 py-4 text-sm font-bold text-purple-100 transition hover:bg-purple-500/30"
               >
-                <span>Transparenz lesen</span>
+                <span>Detaillierte Nutzung lesen</span>
                 <ArrowRight size={16} />
               </button>
             </div>
@@ -720,9 +608,7 @@ const App = () => {
             </button>
 
             <div className="mb-6 border-b border-white/10 pb-4">
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-purple-300">
-                Transparenz
-              </div>
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-purple-300">Transparenz</div>
               <h3 className="mt-2 text-2xl font-black text-white sm:text-3xl">
                 Was auf dieser Website technisch passiert
               </h3>
