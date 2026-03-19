@@ -11,7 +11,6 @@ import {
   GitBranch,
   Hexagon,
   Info,
-  Mail,
   RefreshCw,
   Shield,
   Sparkles,
@@ -63,45 +62,45 @@ const samplePrompts = [
 const faqItems = [
   {
     q: 'Was macht NEXUS genau?',
-    a: 'NEXUS erzeugt aus einer kleinen Alltagshandlung drei alternative, fiktionale Zukunftsszenarien. Das Tool dient der Unterhaltung, Ideenfindung und kreativen Inspiration.',
+    a: 'NEXUS erzeugt aus einer kurzen Alltagshandlung drei alternative, fiktionale Zukunftsszenarien. Das Tool ist für Unterhaltung, Ideenfindung und kreative Impulse gedacht.',
   },
   {
-    q: 'Sind die Ergebnisse wahr oder wissenschaftlich belastbar?',
-    a: 'Nein. Die Ausgaben sind bewusst spekulativ, erzählerisch und teilweise absurd. Es handelt sich nicht um Vorhersagen, Beratung oder Tatsachenbehauptungen.',
+    q: 'Sind die Ergebnisse echte Vorhersagen?',
+    a: 'Nein. Die Ausgaben sind spekulativ, erzählerisch und teils bewusst überzeichnet. Sie sind weder wissenschaftliche Prognosen noch persönliche Beratung.',
   },
   {
     q: 'Werden meine Eingaben gespeichert?',
-    a: 'Im aktuellen Frontend speichert die Website selbst deine Eingaben nicht dauerhaft. Die eingegebenen Texte werden aber zur Generierung an Google Gemini übermittelt. Deshalb solltest du keine sensiblen personenbezogenen Daten eingeben.',
+    a: 'Die Website speichert deine Eingabe nicht dauerhaft als Nutzerprofil. Für die Generierung wird der Text jedoch serverseitig an Google Gemini weitergeleitet. Gib deshalb keine sensiblen oder vertraulichen Daten ein.',
   },
   {
-    q: 'Ist die Seite schon mit Werbung ausgestattet?',
-    a: 'Nein. In dieser überarbeiteten Fassung sind keine aktiven Werbeskripte und keine AdSense-Platzhalter eingebunden. Werbung sollte erst nach Freigabe und sauberer Consent-Einbindung aktiviert werden.',
+    q: 'Ist auf der Seite schon Werbung aktiv?',
+    a: 'Derzeit ist auf der Website keine Werbung eingebunden. Sollte sich das künftig ändern, muss das technisch und datenschutzrechtlich sauber umgesetzt werden.',
   },
   {
-    q: 'Kann ich die Seite auf Mobilgeräten nutzen?',
-    a: 'Ja. Die Oberfläche ist responsive aufgebaut und lässt sich auf Smartphone, Tablet und Desktop bedienen.',
+    q: 'Funktioniert NEXUS auch am Smartphone?',
+    a: 'Ja. Die Oberfläche ist responsiv aufgebaut und lässt sich auf Smartphone, Tablet und Desktop nutzen.',
   },
   {
-    q: 'Warum gibt es Hinweise zu Datenschutz und Transparenz?',
-    a: 'Weil eine kommerziell geplante Website nachvollziehbar erklären muss, wer sie betreibt, was technisch passiert und welche Datenströme tatsächlich stattfinden. Genau daran scheitern viele Projekte unnötig.',
+    q: 'Warum gibt es Hinweise zu Transparenz und Datenschutz?',
+    a: 'Weil klar sein soll, was das Tool kann, was es nicht kann und wie die Generierung technisch abläuft. Das schafft Vertrauen und verhindert falsche Erwartungen.',
   },
 ];
 
 const valuePoints = [
   {
-    title: 'Klare Publisher-Inhalte',
-    text: 'Zusätzliche redaktionelle Bereiche erklären Nutzen, Grenzen, Transparenz und Funktionsweise der Seite. Damit wirkt das Projekt nicht mehr wie eine leere Tool-Shell.',
-    icon: Info,
+    title: 'Drei Perspektiven',
+    text: 'Jede Eingabe wird als drei unterschiedliche Zeitlinien ausgegeben: näher an der Realität, deutlich chaotischer oder komplett eskaliert.',
+    icon: GitBranch,
   },
   {
-    title: 'Saubere Rechtstexte',
-    text: 'Die Angaben auf der Seite behaupten nicht mehr fälschlich, dass bereits AdSense, Cookies oder Tracking aktiv sind. Das war vorher ein unnötiges Risiko.',
+    title: 'Klare Hinweise',
+    text: 'NEXUS zeigt offen, dass es sich um fiktionale KI-Ausgaben handelt und nicht um Fakten, Vorhersagen oder Beratung.',
     icon: Shield,
   },
   {
-    title: 'Bessere Nutzerführung',
-    text: 'Die Seite erklärt jetzt klar, wie das Tool funktioniert, wofür es gedacht ist und welche Eingaben sinnvoll sind. Das erhöht Nutzwert und Vertrauenswürdigkeit.',
-    icon: ChevronRight,
+    title: 'Schnell nutzbar',
+    text: 'Kurze Eingabe, direkte Ausgabe und gut lesbare Karten machen das Tool einfach auf Desktop und Mobilgeräten nutzbar.',
+    icon: Zap,
   },
 ];
 
@@ -191,7 +190,6 @@ const App = () => {
           title: timeline.title || `Zeitlinie ${index + 1}`,
           desc: timeline.desc || 'Keine Beschreibung verfügbar.',
           probability: formatProbability(timeline.probability),
-          // --- HIER WURDE DIE EXAKTE WAHRSCHEINLICHKEIT WIEDER HINZUGEFÜGT ---
           exactProbability: `Exakte mathematische Chance: ${timeline.probability}%`,
         };
       });
@@ -276,16 +274,15 @@ const App = () => {
         <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-emerald-300">
-              <Activity size={14} /> Überarbeitet für klarere AdSense-Readiness
+              <Activity size={14} /> Fiktionale KI-Simulation
             </div>
             <div className="space-y-4">
               <h1 className="max-w-4xl text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
                 Eine kleine Handlung. Drei komplett andere Zukunftslinien.
               </h1>
               <p className="max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
-                NEXUS.core ist ein interaktives KI-Unterhaltungstool. Du gibst eine kleine Alltagshandlung ein und erhältst drei fiktionale Verläufe:
-                realistisch, chaotisch und völlig eskaliert. Die Seite wurde so überarbeitet, dass sie nicht mehr wie ein halbfertiger Werbeplatzhalter wirkt,
-                sondern wie ein nachvollziehbares, sauberes Publisher-Projekt.
+                NEXUS.core ist ein interaktives KI-Tool für fiktionale Szenarien. Du gibst eine kleine Alltagshandlung ein und erhältst drei alternative Verläufe:
+                nachvollziehbar, chaotisch und völlig eskaliert.
               </p>
             </div>
 
@@ -300,13 +297,13 @@ const App = () => {
                 <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-blue-300">
                   <Shield size={14} /> Transparent
                 </div>
-                <p className="text-sm leading-6 text-slate-300">Die Seite behauptet jetzt nur noch das, was technisch und rechtlich auch wirklich zutrifft.</p>
+                <p className="text-sm leading-6 text-slate-300">Klare Hinweise zeigen, dass die Ergebnisse fiktional sind und keine echten Vorhersagen darstellen.</p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-300">
                   <Zap size={14} /> Mobilfreundlich
                 </div>
-                <p className="text-sm leading-6 text-slate-300">Klare Struktur, gute Lesbarkeit und keine irreführenden AdSense-Dummies auf der Startseite.</p>
+                <p className="text-sm leading-6 text-slate-300">Klare Struktur, gute Lesbarkeit und schnelle Nutzung auf Smartphone, Tablet und Desktop.</p>
               </div>
             </div>
           </div>
@@ -324,7 +321,7 @@ const App = () => {
             <div className="space-y-3 text-sm leading-7 text-slate-300">
               <p>Bitte keine sensiblen persönlichen Daten, Zugangsdaten, Gesundheitsdaten oder vertraulichen Inhalte eingeben.</p>
               <p>Die eingegebenen Texte werden für die Generierung serverseitig an Google Gemini übermittelt. Die Ergebnisse sind fiktional und können sachlich falsch sein.</p>
-              <p>Aktuell sind weder AdSense noch Analyse-Skripte aktiv eingebunden. Werbung sollte erst nach Freigabe und sauberer Consent-Lösung live gehen.</p>
+              <p>Die Website ist als kreatives Unterhaltungstool gedacht und nicht für Entscheidungen mit rechtlichen, medizinischen oder finanziellen Folgen.</p>
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
               <button
@@ -464,11 +461,10 @@ const App = () => {
                         </div>
                         <h3 className={`mb-4 text-2xl font-black leading-tight ${scheme.text}`}>{timeline.title}</h3>
                         <p className="mb-5 text-sm leading-7 text-slate-300">{timeline.desc}</p>
-                        
-                        {/* --- HIER WURDE DER HOVER-TOOLTIP EINGEBAUT --- */}
+
                         <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm">
                           <span className="font-bold uppercase tracking-[0.14em] text-slate-400">Chance</span>
-                          <span 
+                          <span
                             className="cursor-help border-b border-dashed border-white/40 pb-0.5 font-black text-white transition-colors hover:border-white"
                             title={timeline.exactProbability}
                           >
@@ -504,15 +500,15 @@ const App = () => {
         <section id="was-ist-das" className="grid gap-6 lg:grid-cols-[1fr_1fr]">
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-7">
             <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-300">Was ist NEXUS?</div>
-            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Mehr als nur ein Eingabefeld</h2>
+            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Ein KI-Tool für alternative Verläufe</h2>
             <div className="space-y-4 text-sm leading-8 text-slate-300 sm:text-base">
               <p>
-                Die ursprüngliche Version wirkte stark wie ein futuristischer Splashscreen mit zwei problematischen Schwächen: zu wenig eigenständigem
-                Publisher-Content und rechtlich ungenauen Aussagen zu Cookies und Werbung. Genau das ist für eine spätere Monetarisierung unnötig riskant.
+                NEXUS.core nimmt eine einfache Alltagshandlung und übersetzt sie in drei mögliche fiktionale Entwicklungen. Der Reiz liegt im Kontrast zwischen
+                plausibler Reaktion, chaotischer Wendung und kompletter Eskalation.
               </p>
               <p>
-                Diese Fassung ergänzt deshalb redaktionelle Inhalte, erklärt den Zweck der Website, beschreibt die technische Funktionsweise offen und verlinkt
-                sauber auf Impressum, Datenschutz und Kontakt. Das macht die Seite für Nutzer verständlicher und für eine Prüfung deutlich seriöser.
+                Das Tool ist für Unterhaltung, kreative Experimente und neue Blickwinkel gedacht. Wer Spaß an Szenarien, Geschichten oder absurden Kettenreaktionen
+                hat, bekommt hier schnelle Impulse in einem klaren Format.
               </p>
             </div>
           </div>
@@ -523,7 +519,7 @@ const App = () => {
             <div className="space-y-4">
               {[
                 'Du gibst eine kurze Alltagshandlung ein.',
-                'Die Eingabe wird an den eigenen Server-Endpunkt gesendet, dort sicher an Google Gemini weitergeleitet und als strukturierte JSON-Antwort verarbeitet.',
+                'Die Eingabe wird an den Server-Endpunkt gesendet, dort an Google Gemini weitergeleitet und als strukturierte Antwort verarbeitet.',
                 'NEXUS formatiert daraus drei lesbare Zeitlinien mit unterschiedlichen Eskalationsstufen.',
               ].map((item, index) => (
                 <div key={item} className="flex gap-4 rounded-2xl border border-white/10 bg-black/20 p-4">
@@ -579,19 +575,19 @@ const App = () => {
             <div className="space-y-4 text-sm leading-8 text-slate-300 sm:text-base">
               <p>Das Tool eignet sich für kreative Mini-Experimente, Social-Media-Posts, Rollenspiel- und Story-Ideen oder einfach als Unterhaltung.</p>
               <p>Der Mehrwert liegt nicht in faktischer Korrektheit, sondern in originellen Perspektivwechseln und erzählerischer Reibung.</p>
-              <p>Genau deshalb sollte die Seite auch offen als fiktionales Entertainment-Tool auftreten und nicht so tun, als würde sie echte Vorhersagen liefern.</p>
+              <p>Besonders spannend wird NEXUS dann, wenn schon eine kleine Eingabe völlig unterschiedliche Richtungen annimmt.</p>
             </div>
           </div>
 
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-7">
             <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-300">Wichtige Grenze</div>
-            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Was man nicht behaupten sollte</h2>
+            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Was NEXUS nicht ist</h2>
             <div className="space-y-3 text-sm leading-7 text-slate-300">
               {[
-                'Keine Aussage, dass bereits AdSense oder Tracking aktiv ist, wenn das technisch noch gar nicht stimmt.',
-                'Keine Werbung direkt auf Seiten ohne echten Publisher-Content oder auf rein generierten Leer-/Übergangsscreens.',
-                'Keine Eingabeaufforderung für vertrauliche personenbezogene Daten.',
-                'Keine Darstellung, die Google oder andere Dienste falsch als Partner oder offiziellen Sponsor erscheinen lässt.',
+                'Kein Prognose- oder Beratungstool für echte Lebensentscheidungen.',
+                'Keine verlässliche Grundlage für rechtliche, medizinische oder finanzielle Fragen.',
+                'Kein Ort für vertrauliche persönliche Daten oder sensible Informationen.',
+                'Keine offizielle Partnerschaft oder Empfehlung durch Google oder andere externe Dienste.',
               ].map((item) => (
                 <div key={item} className="flex gap-3 rounded-2xl border border-white/10 bg-black/20 p-4">
                   <X size={18} className="mt-1 shrink-0 text-red-300" />
@@ -606,10 +602,9 @@ const App = () => {
           <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div>
               <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-purple-300">Kontakt & Rechtliches</div>
-              <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Alle Pflichtseiten sind jetzt sauber verlinkt</h2>
+              <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Mehr Informationen auf den Pflichtseiten</h2>
               <p className="max-w-3xl text-sm leading-8 text-slate-200 sm:text-base">
-                Für Vertrauen, Prüfungen und spätere Monetarisierung brauchst du eine nachvollziehbare Betreiberkennzeichnung, eine echte Datenschutzerklärung
-                und eine Kontaktmöglichkeit. Genau diese Punkte sind jetzt ergänzt und nicht mehr bloß im Nebel eines futuristischen UI versteckt.
+                Auf Impressum, Datenschutz und Kontakt findest du die wichtigsten Angaben zur Website, zur verantwortlichen Person und zur Nutzung des Angebots.
               </p>
             </div>
             <div className="grid gap-3">
@@ -644,7 +639,7 @@ const App = () => {
         <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-8 text-sm text-slate-400 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="font-semibold text-slate-300">© 2026 NEXUS.core</div>
-            <div>Interaktives KI-Unterhaltungstool mit Fokus auf Transparenz, Nutzerverständnis und sauberer Seitenstruktur.</div>
+            <div>Interaktives KI-Unterhaltungstool für alternative, fiktionale Zukunftsszenarien.</div>
           </div>
           <div className="flex flex-wrap gap-4">
             <a href="/impressum.html" className="transition hover:text-white">Impressum</a>
@@ -678,20 +673,20 @@ const App = () => {
 
             <div className="space-y-5 text-sm leading-8 text-slate-300 sm:text-base">
               <p>
-                NEXUS.core ist ein fiktionales KI-Entertainment-Tool. Die Eingaben werden aktuell direkt aus dem Browser an die Google-Gemini-Schnittstelle
-                gesendet, damit daraus drei alternative Zeitlinien berechnet werden können. Gib deshalb keine sensiblen oder vertraulichen Daten ein.
+                NEXUS.core ist ein fiktionales KI-Entertainment-Tool. Deine Eingabe wird an den Server-Endpunkt dieser Website gesendet und von dort zur Generierung
+                an Google Gemini weitergeleitet. Gib deshalb keine sensiblen oder vertraulichen Daten ein.
               </p>
               <p>
-                Die Website enthält in dieser Fassung keine aktiven AdSense-Skripte, keine Analytics-Integration und keinen künstlichen Cookie-Banner mehr.
-                Vorher war genau das ein Problem, weil die Texte mehr behauptet haben als tatsächlich eingebunden war.
+                Die Website selbst stellt keine Tatsachenbehauptungen oder echten Zukunftsprognosen bereit. Die ausgegebenen Zeitlinien sind automatisch erzeugte,
+                kreative Szenarien und können sachlich falsch oder völlig überzeichnet sein.
               </p>
               <p>
-                Für eine spätere Monetarisierung gilt: Werbung erst nach tatsächlicher Freigabe aktivieren, Consent sauber über eine von Google zertifizierte
-                Lösung für EEA/UK/Schweiz einbinden und Werbeflächen nicht auf leere, rein technische oder problematische Auto-Generate-Screens setzen.
+                Aktuell sind auf der Website keine Werbeanzeigen eingebunden. Sollte das später geändert werden, muss die Einbindung technisch und
+                datenschutzrechtlich korrekt erfolgen.
               </p>
               <p>
-                Ebenso wichtig: Das Tool generiert Inhalte automatisiert. Seiten, die überwiegend automatisch generierte Inhalte zeigen, tragen bei der
-                AdSense-Prüfung generell ein höheres Risiko. Genau deshalb wurden zusätzliche redaktionelle Inhalte, klare Hinweise und echte Pflichtseiten ergänzt.
+                Mehr rechtliche Informationen zur Website, zur verantwortlichen Person und zur Datenverarbeitung findest du im Impressum und in der
+                Datenschutzerklärung.
               </p>
             </div>
           </div>
