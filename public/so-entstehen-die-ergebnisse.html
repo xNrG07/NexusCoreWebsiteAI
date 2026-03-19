@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index,follow" />
+    <title>So entstehen die Ergebnisse | NEXUS.core</title>
+    <meta name="description" content="Transparente Erklärung, wie NEXUS.core Eingaben verarbeitet und daraus drei fiktionale Zeitlinien erzeugt." />
+    <style>
+
+      body {
+        margin: 0;
+        font-family: Inter, Arial, sans-serif;
+        background: #070a10;
+        color: #eef2ff;
+        line-height: 1.8;
+      }
+      .wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 40px 20px 72px;
+      }
+      .card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 24px;
+        padding: 28px;
+        margin-top: 20px;
+      }
+      a { color: #c4b5fd; }
+      h1, h2, h3 { line-height: 1.2; margin-top: 0; }
+      .kicker {
+        text-transform: uppercase;
+        letter-spacing: .22em;
+        font-size: 12px;
+        color: #c4b5fd;
+        font-weight: 700;
+      }
+      .toplink {
+        display: inline-block;
+        margin-bottom: 16px;
+      }
+      .muted { color: #b9c1d6; }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .pill {
+        display: inline-block;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.10);
+        text-decoration: none;
+      }
+      .grid {
+        display: grid;
+        gap: 20px;
+      }
+      @media (min-width: 860px) {
+        .grid.two {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      ul {
+        padding-left: 20px;
+      }
+      li + li {
+        margin-top: 8px;
+      }
+      .example {
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding-top: 18px;
+        margin-top: 18px;
+      }
+      .badge {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(196,181,253,0.12);
+        border: 1px solid rgba(196,181,253,0.25);
+        color: #ddd6fe;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="toplink" href="/">← Zurück zur Startseite</a>
+      <div class="kicker">So entstehen die Ergebnisse</div>
+      <h1>Wie NEXUS.core eine Eingabe verarbeitet</h1>
+
+      <div class="card">
+        <p>
+          Die Ergebnisse auf NEXUS.core werden nicht von Hand geschrieben, sondern automatisiert erzeugt.
+          Damit klar bleibt, was technisch passiert, ist der Ablauf hier Schritt für Schritt erklärt.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>1. Kurze Eingabe durch den Nutzer</h2>
+        <p>
+          Du gibst eine kleine Alltagshandlung in das Eingabefeld ein. Sinnvoll sind einfache, neutrale Sätze wie
+          „Ich habe den Bus verpasst“ oder „Ich habe eine Nachricht nicht sofort beantwortet“.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>2. Weiterleitung über den Server-Endpunkt</h2>
+        <p>
+          Die Eingabe wird nicht direkt aus dem sichtbaren Seitenlayout an ein Sprachmodell geschickt, sondern über
+          den Server-Endpunkt der Website weitergeleitet. Von dort geht die Anfrage an Google Gemini.
+        </p>
+        <p class="muted">
+          Genauere Hinweise zur Datenverarbeitung stehen zusätzlich in der <a href="/datenschutz.html">Datenschutzerklärung</a>.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>3. Strukturierte KI-Antwort</h2>
+        <p>
+          NEXUS.core fordert keine endlosen Fließtexte an, sondern eine strukturierte Antwort mit drei Zeitlinien.
+          Diese Zeitlinien unterscheiden sich im Ton und in der Eskalation. Die Ausgabe wird danach im Frontend
+          als lesbare Karten dargestellt.
+        </p>
+      </div>
+
+      <div class="grid two">
+        <div class="card">
+          <span class="badge">Alltag</span>
+          <h3 style="margin-top:12px;">Erste Zeitlinie</h3>
+          <p>
+            Diese Variante bleibt meist am ehesten im Bereich des Vorstellbaren. Sie bildet eine eher direkte und
+            vergleichsweise nahe Reaktion auf die Eingabe ab.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="badge">Eskalation</span>
+          <h3 style="margin-top:12px;">Zweite Zeitlinie</h3>
+          <p>
+            Hier entstehen stärkere Kettenreaktionen. Die Geschichte wird ungewöhnlicher, aber bleibt oft noch im
+            Bereich eines erzählerisch nachvollziehbaren Was-wäre-wenn-Szenarios.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="badge">Überzeichnung</span>
+        <h3 style="margin-top:12px;">Dritte Zeitlinie</h3>
+        <p>
+          Die dritte Linie ist bewusst die freiste und überzeichnetste Variante. Sie darf absurder, surrealer oder
+          größer gedacht sein als die anderen beiden. Genau dadurch entsteht der spielerische Charakter des Tools.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Wichtige Einordnung</h2>
+        <ul>
+          <li>Die Ergebnisse sind automatisch erzeugte Inhalte.</li>
+          <li>Sie können sachlich falsch oder deutlich überzeichnet sein.</li>
+          <li>Sie sind nicht als Fakten, Prognosen oder Beratung zu verstehen.</li>
+          <li>Der angezeigte Prozentwert ist eine von der KI erzeugte Einordnung und keine echte mathematische Berechnung.</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
