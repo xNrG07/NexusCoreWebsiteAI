@@ -1,8 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Activity,
-  AlertTriangle,
-  ArrowRight,
   Check,
   Copy,
   ExternalLink,
@@ -56,6 +54,40 @@ const samplePrompts = [
   'Ich habe eine Nachricht nicht sofort beantwortet',
   'Ich habe heute Kaffee statt Tee getrunken',
   'Ich bin einen anderen Weg nach Hause gegangen',
+  'Ich habe meinen Regenschirm zuhause vergessen',
+  'Ich habe im Zug meinen Platz getauscht',
+  'Ich habe beim Bäcker spontan etwas Neues bestellt',
+  'Ich habe eine alte Nummer wieder eingespeichert',
+  'Ich habe einen Termin um zehn Minuten verschoben',
+  'Ich habe ein Buch gekauft statt es nur anzuschauen',
+  'Ich habe einer fremden Person die Tür aufgehalten',
+  'Ich habe mein Handy für eine Stunde auf lautlos gestellt',
+  'Ich habe den Aufzug nicht genommen und bin die Treppe gegangen',
+  'Ich habe im Café draußen statt drinnen gesessen',
+  'Ich habe eine Playlist zufällig durchlaufen lassen',
+  'Ich habe eine falsche Abzweigung genommen',
+  'Ich habe ein altes Foto wieder angesehen',
+  'Ich habe im Büro einen anderen Schreibtisch gewählt',
+  'Ich habe auf eine Nachricht sofort geantwortet',
+  'Ich habe den letzten freien Parkplatz genommen',
+  'Ich habe im Laden eine Münze aufgehoben',
+  'Ich habe den Bus knapp verpasst',
+  'Ich habe einer Empfehlung doch eine Chance gegeben',
+  'Ich habe mein Abendessen spontan geändert',
+  'Ich habe einen Zettel gefunden und gelesen',
+  'Ich habe ein Gespräch zufällig mitgehört',
+  'Ich habe meinen Schlüssel zuerst nicht gefunden',
+  'Ich habe auf dem Heimweg kurz angehalten',
+  'Ich habe mein Fenster offen gelassen',
+  'Ich habe eine Einladung doch angenommen',
+  'Ich habe beim Einkaufen eine Person vorgelassen',
+  'Ich habe mein Ladekabel zuhause vergessen',
+  'Ich habe mich in der Warteschlange anders angestellt',
+  'Ich habe auf den letzten Drücker umgedreht',
+  'Ich habe meinen Alarm fünf Minuten später gestellt',
+  'Ich habe im Restaurant etwas völlig anderes bestellt',
+  'Ich habe einen Anruf zuerst ignoriert',
+  'Ich habe einem Straßenmusiker Geld gegeben',
 ];
 
 const faqItems = [
@@ -148,6 +180,27 @@ const formatProbability = (value) => {
   return `1 zu ${Math.max(1, Math.round(chance))}`;
 };
 
+const shuffleArray = (items) => {
+  const array = [...items];
+  for (let i = array.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
+const getRandomPrompt = (items, currentValue = '') => {
+  if (!items.length) return '';
+  const pool = items.length > 1 ? items.filter((item) => item !== currentValue) : items;
+  const source = pool.length ? pool : items;
+  return source[Math.floor(Math.random() * source.length)];
+};
+
+const getRandomIdeas = (items, count = 3, exclude = '') => {
+  const filtered = items.filter((item) => item !== exclude);
+  return shuffleArray(filtered).slice(0, count);
+};
+
 const App = () => {
   const [decision, setDecision] = useState('');
   const [step, setStep] = useState('input');
@@ -156,18 +209,15 @@ const App = () => {
   const [results, setResults] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
   const [modal, setModal] = useState(null);
+  const [visibleIdeas, setVisibleIdeas] = useState(() => getRandomIdeas(samplePrompts, 3));
 
   useEffect(() => {
     document.title = 'NEXUS.core | Multiversum-Simulator';
   }, []);
 
-  const randomPrompt = useMemo(
-    () => samplePrompts[Math.floor(Math.random() * samplePrompts.length)],
-    []
-  );
-
   const fillRandom = () => {
-    setDecision(randomPrompt);
+    const nextPrompt = getRandomPrompt(samplePrompts, decision.trim());
+    setDecision(nextPrompt);
   };
 
   const handleAnalyze = async (event) => {
@@ -235,6 +285,7 @@ const App = () => {
     setErrorMsg('');
     setLoadingProgress(0);
     setStep('input');
+    setVisibleIdeas(getRandomIdeas(samplePrompts, 3));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -286,7 +337,7 @@ const App = () => {
       </header>
 
       <main id="top" className="relative z-10 mx-auto flex max-w-6xl flex-col gap-12 px-4 pb-24 pt-8 sm:px-6 sm:pt-16 lg:gap-20">
-        <section id="tool" className="mx-auto flex w-full max-w-4xl flex-col items-center text-center mt-2 sm:mt-8">
+        <section id="tool" className="mx-auto mt-2 flex w-full max-w-4xl flex-col items-center text-center sm:mt-8">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)] sm:text-xs">
             <Activity size={14} className="animate-pulse" /> System online
           </div>
@@ -347,7 +398,7 @@ const App = () => {
 
               <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
                 <span className="mr-2 hidden text-[10px] font-bold uppercase tracking-widest sm:block">Ideen:</span>
-                {samplePrompts.slice(0, 3).map((item) => (
+                {visibleIdeas.map((item) => (
                   <button
                     key={item}
                     type="button"
