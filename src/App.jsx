@@ -286,7 +286,7 @@ const App = () => {
       </header>
 
       <main id="top" className="relative z-10 mx-auto flex max-w-6xl flex-col gap-12 px-4 pb-24 pt-8 sm:px-6 sm:pt-16 lg:gap-20">
-        <section id="tool" className="mx-auto mt-2 flex w-full max-w-4xl flex-col items-center text-center sm:mt-8">
+        <section id="tool" className="mx-auto flex w-full max-w-4xl flex-col items-center text-center mt-2 sm:mt-8">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)] sm:text-xs">
             <Activity size={14} className="animate-pulse" /> System online
           </div>
@@ -308,7 +308,7 @@ const App = () => {
 
             <form onSubmit={handleAnalyze} className="w-full space-y-4 animate-in fade-in zoom-in-95 duration-500">
               <div className="group relative">
-                <div className="absolute inset-0 rounded-[32px] bg-gradient-to-r from-purple-600/30 to-blue-600/30 opacity-40 blur-xl transition-opacity duration-500 group-hover:opacity-80" />
+                <div className="absolute inset-0 rounded-[32px] bg-gradient-to-r from-purple-600/30 to-blue-600/30 opacity-40 blur-xl transition-opacity duration-500 group-hover:opacity-80"></div>
                 <div className="relative rounded-[32px] border border-white/10 bg-[#0a0f18]/80 p-2 shadow-2xl backdrop-blur-2xl transition-all hover:border-purple-500/30 sm:p-3">
                   <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
                     <div className="flex flex-1 items-center gap-3 rounded-3xl px-4 py-3">
@@ -378,12 +378,12 @@ const App = () => {
                   style={{ width: `${loadingProgress}%` }}
                 />
               </div>
-              <div className="mt-3 text-sm font-bold text-slate-500">{loadingProgress}%</div>
+              <div className="mt-3 text-sm font-bold text-slate-500">{loadingProgress}% COMPLETE</div>
             </div>
           )}
 
           {results && step === 'results' && (
-            <div id="results-section" className="mt-16 w-full animate-in space-y-8 slide-in-from-bottom-12 text-left duration-700">
+            <div id="results-section" className="mt-16 w-full space-y-8 animate-in slide-in-from-bottom-12 duration-700 text-left">
               <div className="rounded-[32px] border border-white/5 bg-[#0a0f18]/80 p-6 text-center backdrop-blur-xl sm:p-8">
                 <div className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                   Ausgangsaktion
@@ -399,10 +399,10 @@ const App = () => {
                   return (
                     <article
                       key={timeline.id}
-                      className={`group relative overflow-hidden rounded-[32px] border bg-[#0a0f18] p-6 shadow-2xl transition-transform hover:-translate-y-2 sm:p-8 ${scheme.ring}`}
+                      className={`group relative flex h-full flex-col overflow-hidden rounded-[32px] border bg-[#0a0f18] p-6 shadow-2xl transition-transform hover:-translate-y-2 sm:p-8 ${scheme.ring}`}
                     >
                       <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-50 transition-opacity group-hover:opacity-100 ${scheme.glow}`} />
-                      <div className="relative">
+                      <div className="relative flex h-full flex-col">
                         <div className="mb-6 flex items-start justify-between gap-3">
                           <div>
                             <div className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] ${scheme.badge}`}>
@@ -427,16 +427,18 @@ const App = () => {
                         </h3>
                         <p className="mb-8 text-sm leading-relaxed text-slate-300">{timeline.desc}</p>
 
-                        <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-5 py-4 text-sm">
-                          <span className="font-bold uppercase tracking-[0.16em] text-slate-500">
+                        <div className="mt-auto flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-black/40 px-4 py-4 sm:px-5">
+                          <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500 sm:text-xs">
                             Einordnung
                           </span>
-                          <span
-                            className="cursor-help border-b border-dashed border-white/20 pb-0.5 font-black text-white transition-colors hover:border-white"
-                            title={timeline.probabilityTooltip}
-                          >
-                            {timeline.probability}
-                          </span>
+                          <div className="text-right">
+                            <span
+                              className="inline-block cursor-help border-b border-dashed border-white/20 pb-0.5 text-base font-black leading-tight text-white transition-colors hover:border-white sm:text-lg"
+                              title={timeline.probabilityTooltip}
+                            >
+                              {timeline.probability}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </article>
