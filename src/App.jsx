@@ -190,6 +190,58 @@ const hallOfFameData = [
       },
     ],
   },
+  {
+  original: 'Ich habe heute 3 Stunden auf TikTok verbracht',
+  timelines: [
+    {
+      id: 'ALPHA',
+      type: 'Alltäglich',
+      title: 'Der unerwartete Karrieresprung',
+      desc: 'Durch das exzessive Scrollen stoßen Sie auf einen Nischen-Tutorial-Kanal für "Extreme Bonsai-Züchtung mit Algen". Fasziniert beginnen Sie selbst damit und entwickeln in den nächsten Monaten eine einzigartige Methode. Ein lokaler Gartenbau-Influencer entdeckt Ihre Arbeit, bewirbt sie viral, und plötzlich sind Sie gefragter Experte, der Workshops gibt und internationale Ausstellungen bestückt.',
+      probability: '42.2 %',
+    },
+    {
+      id: 'BETA',
+      type: 'Unerwartet',
+      title: 'Die tanzende Tomaten-Revolution',
+      desc: 'Ein TikTok-Video, das eine Katze beim "Reverse Salsa" tanzen zeigt, bleibt in Ihrem Unterbewusstsein hängen. Am nächsten Tag, beim Einkaufen, sehen Sie eine besonders runde Tomate und können nicht widerstehen, ihr einen kleinen Tanzschritt beizubringen. Eine Überwachungskamera fängt den Moment ein, das Video geht viral und inspiriert eine globale Bewegung "Tanze mit deinem Gemüse", was zu einer kurzfristigen weltweiten Verknappung von Tanzlehrern und einem Boom bei Minibarren für Küchen führt.',
+      probability: '1 zu 142.9 Mio.',
+    },
+    {
+      id: 'OMEGA',
+      type: 'Paradox',
+      title: 'Resonanzfrequenz der Bewusstseinsverschiebung',
+      desc: 'Die hochfrequente Ansammlung von Mikro-Entscheidungen und Dopamin-Ausschüttungen während der dreistündigen TikTok-Session erzeugt eine winzige, aber kohärente Resonanzwelle in Ihrem Gehirn. Diese Welle, verstärkt durch die kumulative Aufmerksamkeit von Milliarden Nutzern, durchbricht unbemerkt die Barriere zwischen den Dimensionen. Für einen Bruchteil einer Sekunde manifestiert sich in einem weit entfernten Quadranten des Universums ein neues, pulsierendes Nebel-"Die tanzenden Memes", das von außerirdischen Zivilisationen als kryptische Botschaft einer neuen Form von Leben interpretiert wird.',
+      probability: '1 zu 10.0 Bio.',
+    },
+  ],
+},
+{
+  original: 'Ich habe einen Tag auf Social Media verzichtet',
+  timelines: [
+    {
+      id: 'ALPHA',
+      type: 'Alltäglich',
+      title: 'Unerwartetes Hobby entfacht',
+      desc: 'Der Verzicht auf Social Media führt zu ungeahnt freier Zeit, die du nutzt, um ein altes, vergessenes Buch zu lesen. Darin findest du eine Skizze eines lokalen Künstlers, die dich inspiriert, selbst zu zeichnen. Dein spontaner Besuch in einem Kunstbedarfsgeschäft führt zu einem Gespräch mit dem Inhaber, der dein verborgenes Talent erkennt und dich zu einer lokalen Ausstellung einlädt.',
+      probability: '78.5 %',
+    },
+    {
+      id: 'BETA',
+      type: 'Unerwartet',
+      title: 'Die vergessene Avocado-Revolution',
+      desc: 'Da du einen Tag auf Social Media verzichtest, verpasst du zufällig einen viralen Post über "Avocado-Socken-Mode". Ein Startup, das diesen Trend hätte aufgreifen wollen, findet so nie seinen Investor. Der Gründer des Startups wird depressiv und wendet sich der Alchemie zu, wo er unbeabsichtigt ein Elixier entdeckt, das Avocado-Pflanzen zu riesigen, schwebenden Wesen macht. Diese Wesen beginnen, die Welt nach ihrem eigenen, avocado-zentrierten Plan umzugestalten.',
+      probability: '12.0 %',
+    },
+    {
+      id: 'OMEGA',
+      type: 'Paradox',
+      title: 'Das digitale Echo der Stille',
+      desc: 'Dein bewusster Verzicht auf Social Media für einen ganzen Tag erzeugt eine winzige, aber perfekte Lücke im globalen digitalen Rauschen. Diese Lücke wird von einem außerirdischen Observatorium als ein "Fehlendes Pulsar-Signal" interpretiert. Eine Sonde wird entsandt, die auf der Erde landet und dein Smartphone als Ursprung des Signals identifiziert. Sie beginnt, alle digitalen Interaktionen auf der Erde zu katalogisieren, um die Quelle der "Stille" zu verstehen, und löst damit unbemerkt eine kosmische Debatte über die Natur des "Nicht-Existierens" aus.',
+      probability: '1 zu 25.0 Mio.',
+    },
+  ],
+},
 ];
 // === ENDE NEUE DATEN ===
 
