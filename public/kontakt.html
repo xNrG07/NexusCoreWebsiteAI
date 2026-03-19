@@ -38,6 +38,41 @@
         display: inline-block;
         margin-bottom: 16px;
       }
+      form {
+        display: grid;
+        gap: 14px;
+        margin-top: 12px;
+      }
+      label {
+        display: grid;
+        gap: 6px;
+        font-weight: 600;
+      }
+      input, textarea {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 14px;
+        padding: 12px 14px;
+        background: rgba(255,255,255,0.04);
+        color: #eef2ff;
+        font: inherit;
+      }
+      textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+      button {
+        border: 0;
+        border-radius: 14px;
+        padding: 12px 16px;
+        background: #c4b5fd;
+        color: #111827;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .note { color: #b9c1d6; font-size: 14px; }
     </style>
   </head>
   <body>
@@ -48,8 +83,12 @@
 
       <div class="card">
         <h2>Allgemeine Anfragen</h2>
+        <p>Für Hinweise, Rückmeldungen oder rechtliche Anfragen erreichen Sie den Betreiber unter:</p>
         <p>
-          Für Hinweise, Rückmeldungen oder rechtliche Anfragen erreichen Sie den Betreiber unter:
+          <strong>Peter Markelic</strong><br />
+          Richtstraße 13c<br />
+          9500 Villach<br />
+          Österreich
         </p>
         <p>
           <strong>E-Mail:</strong> <a href="mailto:peter.markelic1@gmail.com">peter.markelic1@gmail.com</a>
@@ -57,12 +96,59 @@
       </div>
 
       <div class="card">
+        <h2>Kontaktformular</h2>
+        <p>
+          Sie können alternativ auch dieses Formular verwenden. Beim Absenden wird Ihr lokales E-Mail-Programm mit den eingegebenen Daten geöffnet.
+          Falls sich kein E-Mail-Programm öffnet, verwenden Sie bitte die oben angegebene E-Mail-Adresse direkt.
+        </p>
+
+        <form id="contactForm">
+          <label>
+            Name
+            <input type="text" id="name" name="name" maxlength="120" required />
+          </label>
+          <label>
+            E-Mail
+            <input type="email" id="email" name="email" maxlength="160" required />
+          </label>
+          <label>
+            Nachricht
+            <textarea id="message" name="message" maxlength="3000" required></textarea>
+          </label>
+          <button type="submit">Nachricht vorbereiten</button>
+        </form>
+        <p class="note">Es erfolgt kein direkter Versand über einen Server dieser Website.</p>
+      </div>
+
+      <div class="card">
         <h2>Hinweis zu Inhalten</h2>
         <p>
           NEXUS.core ist ein fiktionales KI-Unterhaltungstool. Wenn Sie auf fehlerhafte Inhalte, technische Probleme oder rechtlich problematische Inhalte hinweisen möchten,
-          beschreiben Sie die betroffene Seite und – wenn möglich – den genauen Zeitpunkt der Nutzung.
+          beschreiben Sie bitte die betroffene Seite und – wenn möglich – den ungefähren Zeitpunkt der Nutzung.
         </p>
       </div>
     </div>
+
+    <script>
+      document.getElementById('contactForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        const subject = encodeURIComponent('Kontaktanfrage über NEXUS.core');
+        const body = encodeURIComponent(
+          'Name: ' + name + '
+' +
+          'E-Mail: ' + email + '
+
+' +
+          'Nachricht:
+' + message
+        );
+
+        window.location.href = 'mailto:peter.markelic1@gmail.com?subject=' + subject + '&body=' + body;
+      });
+    </script>
   </body>
 </html>
