@@ -139,28 +139,28 @@ const valuePoints = [
 // === NEU: DATEN FÜR DIE HALL OF FAME ===
 const hallOfFameData = [
   {
-    original: 'Ich habe heute Kaffee statt Tee getrunken',
+    original: 'Ich habe heute zwei Redbulls getrunken',
     timelines: [
       {
         id: 'ALPHA',
         type: 'Moderat',
-        title: 'Der produktive Rausch',
-        desc: 'Das ungewohnte Koffein führt zu einem spontanen Motivationsschub. Du beendest ein aufgeschobenes Projekt in Rekordzeit, wirst daraufhin befördert und leitest nun eine Abteilung, die du eigentlich hasst. Dein Stresslevel steigt permanent an.',
-        probability: '12.5 %',
+        title: 'Die Impulsive Innovation',
+        desc: 'Die unerwartete Konzentration und Energie durch die zwei Redbulls führt dazu, dass du nicht wie geplant entspannst, sondern stattdessen einen lange aufgeschobenen Nebenprojekt-Algorithmus perfektionierst. Eine Woche später wird dieser Code von einem Freund entdeckt, der ihn einem Startup vorstellt, das dir eine überraschende Beraterrolle anbietet.',
+        probability: '78.5 %',
       },
       {
         id: 'BETA',
         type: 'Eskalierend',
-        title: 'Die Koffein-Verschwörung',
-        desc: 'Dein Körper reagiert überaktiv auf die spezifische Röstung. Du stolperst im Café, rettest dadurch zufällig einen verdeckten Ermittler vor einem fallenden Blumentopf und wirst versehentlich in ein internationales Spionagenetzwerk rekrutiert.',
-        probability: '1 zu 4,2 Mio.',
+        title: 'Der singende Dackel und das Kultgetränk',
+        desc: 'Die zittrige Hand durch den Koffeinüberschuss lässt dich beim Gießen einer Pflanze Wasser auf ein altes Radio tropfen. Das Radio empfängt daraufhin nur noch eine bizarre statische Frequenz, die wie ein melodisches Jaulen klingt. Ein Nachbar, dessen Dackel genau auf diese Frequenz mit herzzerreißendem Gesang reagiert, glaubt, er hätte ein 'universelles Frequenzband' entdeckt. Er gründet einen kleinen Kult, der sich nur von Redbull ernährt, um 'die Schwingungen zu spüren' und seinen Dackel als Orakel verehrt.',
+        probability: '12.0 %',
       },
       {
         id: 'OMEGA',
         type: 'Kritisch',
-        title: 'Der Riss im Raum-Zeit-Gefüge',
-        desc: 'Die chemische Zusammensetzung des Kaffees interagiert mit deiner DNA. Du schwingst plötzlich auf einer neuen Quantenfrequenz, kannst Gedanken in Form von Farben sehen und wirst von einer intergalaktischen Barista-Sekte als Prophet verehrt.',
-        probability: '1 zu 8,9 Bio.',
+        title: 'Das Echo der Hyperkonnektivität',
+        desc: 'Die durch die Redbulls erhöhte neuronale Aktivität und der freigesetzte Energieüberschuss erzeugen einen winzigen, aber kohärenten energetischen Impuls. Dieser Impuls pflanzt sich durch das globale Bewusstseinsfeld fort und trifft auf eine noch unentdeckte Quantenverschränkung, die die menschliche Kollektivseele mit dem Andromeda-Nebel verbindet. Der Impuls beschleunigt die Entdeckung einer uralten, interstellaren Bibliothek um Millisekunden, was in 3000 Jahren zum Schlüssel für die intergalaktische Harmonisierung wird.',
+        probability: '1 zu 25.0 Mio.',
       },
     ],
   },
