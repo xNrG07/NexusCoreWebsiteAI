@@ -297,9 +297,23 @@ const App = () => {
       window.clearInterval(progressInterval);
       setLoadingProgress(100);
 
-      const mappedTimelines = (geminiData?.timelines || []).slice(0, 3).map((timeline, index) => {
+      // 1. Array auslesen und den rohen Wahrscheinlichkeitswert für die Sortierung ermitteln
+      const rawTimelines = (geminiData?.timelines || []).slice(0, 3).map((timeline) => {
+        const rawProb = Number.parseFloat(String(timeline.probability).replace(',', '.'));
+        return {
+          ...timeline,
+          // Fallback auf 0 bei fehlerhaften Werten, damit die Sortierung nicht kaputtgeht
+          _sortValue: Number.isNaN(rawProb) ? 0 : rawProb 
+        };
+      });
+
+      // 2. Absteigend sortieren (höchste Zahl / wahrscheinlichstes Szenario zuerst)
+      rawTimelines.sort((a, b) => b._sortValue - a._sortValue);
+
+      // 3. Jetzt erst die Labels vergeben und final formatieren
+      const mappedTimelines = rawTimelines.map((timeline, index) => {
         const mappedId = ['ALPHA', 'BETA', 'OMEGA'][index] || timeline.id || `TL-${index}`;
-        const rawProbability = Number.parseFloat(String(timeline.probability).replace(',', '.'));
+        const rawProbability = timeline._sortValue;
 
         return {
           id: mappedId,
