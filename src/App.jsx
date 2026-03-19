@@ -4,7 +4,6 @@ import {
   AlertTriangle,
   ArrowRight,
   Check,
-  ChevronRight,
   Copy,
   ExternalLink,
   Fingerprint,
@@ -61,46 +60,46 @@ const samplePrompts = [
 
 const faqItems = [
   {
-    q: 'Was macht NEXUS genau?',
-    a: 'NEXUS erzeugt aus einer kurzen Alltagshandlung drei alternative, fiktionale Zukunftsszenarien. Das Tool ist für Unterhaltung, Ideenfindung und kreative Impulse gedacht.',
+    q: 'Was macht NEXUS.core?',
+    a: 'NEXUS.core erzeugt aus einer kleinen Alltagshandlung drei alternative, fiktionale Zukunftsszenarien. Das Tool dient der Unterhaltung, Ideenfindung und kreativen Inspiration.',
   },
   {
     q: 'Sind die Ergebnisse echte Vorhersagen?',
-    a: 'Nein. Die Ausgaben sind spekulativ, erzählerisch und teils bewusst überzeichnet. Sie sind weder wissenschaftliche Prognosen noch persönliche Beratung.',
+    a: 'Nein. Die Ausgaben sind bewusst spekulativ, erzählerisch und teilweise überzeichnet. Es handelt sich nicht um wissenschaftliche Prognosen, Beratung oder Tatsachenbehauptungen.',
   },
   {
     q: 'Werden meine Eingaben gespeichert?',
-    a: 'Die Website speichert deine Eingabe nicht dauerhaft als Nutzerprofil. Für die Generierung wird der Text jedoch serverseitig an Google Gemini weitergeleitet. Gib deshalb keine sensiblen oder vertraulichen Daten ein.',
+    a: 'Die Website speichert deine Eingaben im normalen Nutzungsvorgang nicht dauerhaft. Für die Generierung wird deine Eingabe jedoch serverseitig an Google Gemini weitergeleitet. Deshalb solltest du keine sensiblen oder vertraulichen Daten eingeben.',
   },
   {
-    q: 'Ist auf der Seite schon Werbung aktiv?',
-    a: 'Derzeit ist auf der Website keine Werbung eingebunden. Sollte sich das künftig ändern, muss das technisch und datenschutzrechtlich sauber umgesetzt werden.',
+    q: 'Ist die Seite schon mit Werbung ausgestattet?',
+    a: 'Aktuell sind auf dieser Seite keine aktiven Werbeskripte eingebunden. Werbung wird erst dann aktiviert, wenn die technische und rechtliche Einbindung vollständig umgesetzt ist.',
   },
   {
-    q: 'Funktioniert NEXUS auch am Smartphone?',
-    a: 'Ja. Die Oberfläche ist responsiv aufgebaut und lässt sich auf Smartphone, Tablet und Desktop nutzen.',
+    q: 'Kann ich die Seite am Smartphone nutzen?',
+    a: 'Ja. Die Oberfläche ist responsive aufgebaut und lässt sich auf Smartphone, Tablet und Desktop bedienen.',
   },
   {
-    q: 'Warum gibt es Hinweise zu Transparenz und Datenschutz?',
-    a: 'Weil klar sein soll, was das Tool kann, was es nicht kann und wie die Generierung technisch abläuft. Das schafft Vertrauen und verhindert falsche Erwartungen.',
+    q: 'Wofür ist das Tool sinnvoll?',
+    a: 'Zum Beispiel für kreative Schreibideen, Social-Media-Inhalte, kleine Gedankenspiele oder einfach zur Unterhaltung.',
   },
 ];
 
 const valuePoints = [
   {
-    title: 'Drei Perspektiven',
-    text: 'Jede Eingabe wird als drei unterschiedliche Zeitlinien ausgegeben: näher an der Realität, deutlich chaotischer oder komplett eskaliert.',
+    title: 'Drei alternative Zeitlinien',
+    text: 'Aus einer kurzen Alltagshandlung entstehen drei unterschiedlich eskalierende Zukunftsverläufe – von nachvollziehbar bis komplett überdreht.',
     icon: GitBranch,
   },
   {
-    title: 'Klare Hinweise',
-    text: 'NEXUS zeigt offen, dass es sich um fiktionale KI-Ausgaben handelt und nicht um Fakten, Vorhersagen oder Beratung.',
-    icon: Shield,
+    title: 'Schnelle KI-Ausgabe',
+    text: 'Die Ergebnisse werden in wenigen Sekunden erzeugt und direkt als lesbare Karten dargestellt.',
+    icon: Zap,
   },
   {
-    title: 'Schnell nutzbar',
-    text: 'Kurze Eingabe, direkte Ausgabe und gut lesbare Karten machen das Tool einfach auf Desktop und Mobilgeräten nutzbar.',
-    icon: Zap,
+    title: 'Fiktional und transparent',
+    text: 'NEXUS.core ist ein kreatives Unterhaltungstool. Die Ausgaben sind keine echten Vorhersagen und nicht für wichtige Entscheidungen gedacht.',
+    icon: Shield,
   },
 ];
 
@@ -127,7 +126,7 @@ const colorMap = {
 
 const formatProbability = (value) => {
   const num = Number.parseFloat(String(value).replace(',', '.'));
-  if (Number.isNaN(num)) return 'Anomalie';
+  if (Number.isNaN(num)) return 'Unbekannt';
 
   if (num >= 1) return `${num.toFixed(1)} %`;
   if (num >= 0.01) return `${num.toFixed(2)} %`;
@@ -190,7 +189,6 @@ const App = () => {
           title: timeline.title || `Zeitlinie ${index + 1}`,
           desc: timeline.desc || 'Keine Beschreibung verfügbar.',
           probability: formatProbability(timeline.probability),
-          exactProbability: `Exakte mathematische Chance: ${timeline.probability}%`,
         };
       });
 
@@ -200,8 +198,12 @@ const App = () => {
 
       setResults({ original: trimmed, timelines: mappedTimelines });
       setStep('results');
+
       window.setTimeout(() => {
-        document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('results-section')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
       }, 120);
     } catch (error) {
       window.clearInterval(progressInterval);
@@ -226,7 +228,7 @@ const App = () => {
   const handleCopy = async (timeline) => {
     if (!results) return;
 
-    const text = `NEXUS.core\nAusgangsaktion: "${results.original}"\n\n${timeline.id}: ${timeline.title}\n${timeline.desc}\nWahrscheinlichkeit: ${timeline.probability}`;
+    const text = `NEXUS.core\nAusgangsaktion: "${results.original}"\n\n${timeline.id}: ${timeline.title}\n${timeline.desc}\nEinordnung: ${timeline.probability}`;
 
     try {
       await navigator.clipboard.writeText(text);
@@ -274,15 +276,14 @@ const App = () => {
         <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-emerald-300">
-              <Activity size={14} /> Fiktionale KI-Simulation
+              <Activity size={14} /> System online
             </div>
             <div className="space-y-4">
               <h1 className="max-w-4xl text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Eine kleine Handlung. Drei komplett andere Zukunftslinien.
+                Eine kleine Handlung. Drei völlig andere Zeitlinien.
               </h1>
               <p className="max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
-                NEXUS.core ist ein interaktives KI-Tool für fiktionale Szenarien. Du gibst eine kleine Alltagshandlung ein und erhältst drei alternative Verläufe:
-                nachvollziehbar, chaotisch und völlig eskaliert.
+                NEXUS.core ist ein interaktives KI-Unterhaltungstool. Du gibst eine kleine Alltagshandlung ein und erhältst drei alternative Zukunftsverläufe – von nachvollziehbar bis völlig eskaliert.
               </p>
             </div>
 
@@ -291,19 +292,25 @@ const App = () => {
                 <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-purple-300">
                   <GitBranch size={14} /> Kreativ
                 </div>
-                <p className="text-sm leading-6 text-slate-300">Geeignet für Story-Ideen, Social Posts, Schreibimpulse und absurde Gedankenspiele.</p>
+                <p className="text-sm leading-6 text-slate-300">
+                  Gut für Story-Ideen, Social Posts und absurde Gedankenspiele.
+                </p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-blue-300">
                   <Shield size={14} /> Transparent
                 </div>
-                <p className="text-sm leading-6 text-slate-300">Klare Hinweise zeigen, dass die Ergebnisse fiktional sind und keine echten Vorhersagen darstellen.</p>
+                <p className="text-sm leading-6 text-slate-300">
+                  Klare Hinweise zur Nutzung, Technik und zum Umgang mit Eingaben.
+                </p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-300">
-                  <Zap size={14} /> Mobilfreundlich
+                  <Zap size={14} /> Schnell
                 </div>
-                <p className="text-sm leading-6 text-slate-300">Klare Struktur, gute Lesbarkeit und schnelle Nutzung auf Smartphone, Tablet und Desktop.</p>
+                <p className="text-sm leading-6 text-slate-300">
+                  Die Ausgabe erscheint in wenigen Sekunden direkt im Browser.
+                </p>
               </div>
             </div>
           </div>
@@ -314,15 +321,21 @@ const App = () => {
                 <Terminal size={20} />
               </div>
               <div>
-                <div className="text-sm font-black uppercase tracking-[0.18em] text-white">Vor dem Start wichtig</div>
-                <div className="text-xs uppercase tracking-[0.16em] text-slate-500">Datenschutz & Nutzung</div>
+                <div className="text-sm font-black uppercase tracking-[0.18em] text-white">
+                  Vor dem Start wichtig
+                </div>
+                <div className="text-xs uppercase tracking-[0.16em] text-slate-500">
+                  Nutzung & Datenschutz
+                </div>
               </div>
             </div>
+
             <div className="space-y-3 text-sm leading-7 text-slate-300">
               <p>Bitte keine sensiblen persönlichen Daten, Zugangsdaten, Gesundheitsdaten oder vertraulichen Inhalte eingeben.</p>
-              <p>Die eingegebenen Texte werden für die Generierung serverseitig an Google Gemini übermittelt. Die Ergebnisse sind fiktional und können sachlich falsch sein.</p>
-              <p>Die Website ist als kreatives Unterhaltungstool gedacht und nicht für Entscheidungen mit rechtlichen, medizinischen oder finanziellen Folgen.</p>
+              <p>Die Eingaben werden zur Generierung serverseitig an Google Gemini weitergeleitet. Die Ergebnisse sind fiktional und können sachlich falsch sein.</p>
+              <p>Die Ausgaben dienen der Unterhaltung und kreativen Inspiration, nicht der Beratung oder echten Entscheidungsfindung.</p>
             </div>
+
             <div className="mt-6 flex flex-wrap gap-3">
               <button
                 type="button"
@@ -345,9 +358,9 @@ const App = () => {
           <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="space-y-2">
               <div className="text-xs font-bold uppercase tracking-[0.2em] text-purple-300">Interaktives Tool</div>
-              <h2 className="text-2xl font-black text-white sm:text-3xl">Simuliere deine Entscheidung</h2>
+              <h2 className="text-2xl font-black text-white sm:text-3xl">Simuliere deine Eingabe</h2>
               <p className="max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
-                Beschreibe eine kleine Handlung in einem kurzen Satz. Das Tool erzeugt drei alternative Verläufe und formatiert sie als lesbare Karten.
+                Beschreibe eine kleine Handlung in einem kurzen Satz. Das Tool erzeugt drei alternative Verläufe und stellt sie als lesbare Karten dar.
               </p>
             </div>
             <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-amber-300">
@@ -415,12 +428,17 @@ const App = () => {
               <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full border border-purple-400/30 bg-purple-500/10">
                 <Fingerprint size={28} className="animate-pulse text-purple-300" />
               </div>
-              <div className="mb-2 text-xl font-black uppercase tracking-[0.18em] text-white">Zeitlinien werden berechnet</div>
+              <div className="mb-2 text-xl font-black uppercase tracking-[0.18em] text-white">
+                Zeitlinien werden erzeugt
+              </div>
               <p className="mx-auto mb-5 max-w-xl text-sm leading-7 text-slate-300">
-                NEXUS verarbeitet die Eingabe und erzeugt drei alternative Verläufe. Das dauert normalerweise nur einen Moment.
+                NEXUS verarbeitet die Eingabe und erstellt drei alternative Verläufe. Das dauert normalerweise nur einen kurzen Moment.
               </p>
               <div className="mx-auto h-3 max-w-xl overflow-hidden rounded-full bg-slate-800">
-                <div className="h-full rounded-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300" style={{ width: `${loadingProgress}%` }} />
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300"
+                  style={{ width: `${loadingProgress}%` }}
+                />
               </div>
               <div className="mt-3 text-sm font-bold text-slate-400">{loadingProgress}%</div>
             </div>
@@ -429,8 +447,12 @@ const App = () => {
           {results && step === 'results' && (
             <div id="results-section" className="mt-8 space-y-5">
               <div className="rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6">
-                <div className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-slate-400">Ausgangsaktion</div>
-                <div className="text-lg font-semibold leading-8 text-white sm:text-2xl">„{results.original}“</div>
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+                  Ausgangsaktion
+                </div>
+                <div className="text-lg font-semibold leading-8 text-white sm:text-2xl">
+                  „{results.original}“
+                </div>
               </div>
 
               <div className="grid gap-4 lg:grid-cols-3">
@@ -445,10 +467,14 @@ const App = () => {
                       <div className="relative">
                         <div className="mb-4 flex items-start justify-between gap-3">
                           <div>
-                            <div className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] ${scheme.badge}`}>
+                            <div
+                              className={`inline-flex rounded-full border px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] ${scheme.badge}`}
+                            >
                               {timeline.id}
                             </div>
-                            <div className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-slate-400">{timeline.type}</div>
+                            <div className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-slate-400">
+                              {timeline.type}
+                            </div>
                           </div>
                           <button
                             type="button"
@@ -459,17 +485,17 @@ const App = () => {
                             {copiedId === timeline.id ? <Check size={18} /> : <Copy size={18} />}
                           </button>
                         </div>
-                        <h3 className={`mb-4 text-2xl font-black leading-tight ${scheme.text}`}>{timeline.title}</h3>
+
+                        <h3 className={`mb-4 text-2xl font-black leading-tight ${scheme.text}`}>
+                          {timeline.title}
+                        </h3>
                         <p className="mb-5 text-sm leading-7 text-slate-300">{timeline.desc}</p>
 
                         <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm">
-                          <span className="font-bold uppercase tracking-[0.14em] text-slate-400">Chance</span>
-                          <span
-                            className="cursor-help border-b border-dashed border-white/40 pb-0.5 font-black text-white transition-colors hover:border-white"
-                            title={timeline.exactProbability}
-                          >
-                            {timeline.probability}
+                          <span className="font-bold uppercase tracking-[0.14em] text-slate-400">
+                            Einordnung
                           </span>
+                          <span className="font-black text-white">{timeline.probability}</span>
                         </div>
                       </div>
                     </article>
@@ -499,28 +525,34 @@ const App = () => {
 
         <section id="was-ist-das" className="grid gap-6 lg:grid-cols-[1fr_1fr]">
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-7">
-            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-300">Was ist NEXUS?</div>
-            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Ein KI-Tool für alternative Verläufe</h2>
+            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-300">
+              Was ist NEXUS?
+            </div>
+            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">
+              Ein spielerisches Was-wäre-wenn-Tool
+            </h2>
             <div className="space-y-4 text-sm leading-8 text-slate-300 sm:text-base">
               <p>
-                NEXUS.core nimmt eine einfache Alltagshandlung und übersetzt sie in drei mögliche fiktionale Entwicklungen. Der Reiz liegt im Kontrast zwischen
-                plausibler Reaktion, chaotischer Wendung und kompletter Eskalation.
+                NEXUS.core nimmt eine kleine Alltagshandlung und denkt sie in drei unterschiedliche Richtungen weiter. So entstehen kurze alternative Zeitlinien mit unterschiedlicher Eskalationsstufe.
               </p>
               <p>
-                Das Tool ist für Unterhaltung, kreative Experimente und neue Blickwinkel gedacht. Wer Spaß an Szenarien, Geschichten oder absurden Kettenreaktionen
-                hat, bekommt hier schnelle Impulse in einem klaren Format.
+                Das Ergebnis ist kein wissenschaftliches Modell, sondern ein kreatives KI-Format für Unterhaltung, Inspiration und neugieriges Ausprobieren.
               </p>
             </div>
           </div>
 
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-7">
-            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-purple-300">So funktioniert es</div>
-            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Ablauf in drei Schritten</h2>
+            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-purple-300">
+              So funktioniert es
+            </div>
+            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">
+              Ablauf in drei Schritten
+            </h2>
             <div className="space-y-4">
               {[
                 'Du gibst eine kurze Alltagshandlung ein.',
-                'Die Eingabe wird an den Server-Endpunkt gesendet, dort an Google Gemini weitergeleitet und als strukturierte Antwort verarbeitet.',
-                'NEXUS formatiert daraus drei lesbare Zeitlinien mit unterschiedlichen Eskalationsstufen.',
+                'Die Eingabe wird an den eigenen Server-Endpunkt gesendet und von dort an Google Gemini weitergegeben.',
+                'NEXUS formatiert die Antwort in drei lesbare Zeitlinien mit unterschiedlichen Verläufen.',
               ].map((item, index) => (
                 <div key={item} className="flex gap-4 rounded-2xl border border-white/10 bg-black/20 p-4">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-sm font-black text-white">
@@ -570,27 +602,35 @@ const App = () => {
 
         <section className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-7">
-            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-300">Einsatzideen</div>
-            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Wofür die Seite sinnvoll ist</h2>
+            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-300">
+              Einsatzideen
+            </div>
+            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">
+              Wofür die Seite sinnvoll ist
+            </h2>
             <div className="space-y-4 text-sm leading-8 text-slate-300 sm:text-base">
-              <p>Das Tool eignet sich für kreative Mini-Experimente, Social-Media-Posts, Rollenspiel- und Story-Ideen oder einfach als Unterhaltung.</p>
-              <p>Der Mehrwert liegt nicht in faktischer Korrektheit, sondern in originellen Perspektivwechseln und erzählerischer Reibung.</p>
-              <p>Besonders spannend wird NEXUS dann, wenn schon eine kleine Eingabe völlig unterschiedliche Richtungen annimmt.</p>
+              <p>Nutze das Tool als kleine Unterhaltung mit Freunden oder als Ausgangspunkt für absurde Gespräche und Ideen.</p>
+              <p>Für Autorinnen, Autoren oder Pen-and-Paper-Spieler kann NEXUS.core ein schneller Impulsgeber für neue Szenen, Plots und Wendungen sein.</p>
+              <p>Außerdem zeigt das Format auf einfache Weise, wie kreativ moderne Sprachmodelle mit kurzen Eingaben umgehen können.</p>
             </div>
           </div>
 
           <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 sm:p-7">
-            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-300">Wichtige Grenze</div>
-            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Was NEXUS nicht ist</h2>
+            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-amber-300">
+              Wichtige Grenze
+            </div>
+            <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">
+              Nur ein Gedankenexperiment
+            </h2>
             <div className="space-y-3 text-sm leading-7 text-slate-300">
               {[
-                'Kein Prognose- oder Beratungstool für echte Lebensentscheidungen.',
-                'Keine verlässliche Grundlage für rechtliche, medizinische oder finanzielle Fragen.',
-                'Kein Ort für vertrauliche persönliche Daten oder sensible Informationen.',
-                'Keine offizielle Partnerschaft oder Empfehlung durch Google oder andere externe Dienste.',
+                'Die generierten Zeitlinien sind fiktional.',
+                'NEXUS liefert keine echten Vorhersagen, Lebensberatung oder Tatsachenbehauptungen.',
+                'Bitte verwende das Tool nicht, um echte, schwerwiegende Entscheidungen zu treffen.',
+                'Sensible oder persönliche Daten sollten nicht in den Simulator eingegeben werden.',
               ].map((item) => (
                 <div key={item} className="flex gap-3 rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <X size={18} className="mt-1 shrink-0 text-red-300" />
+                  <Info size={18} className="mt-1 shrink-0 text-amber-300" />
                   <p>{item}</p>
                 </div>
               ))}
@@ -601,10 +641,14 @@ const App = () => {
         <section className="rounded-[30px] border border-white/10 bg-gradient-to-br from-purple-600/15 to-blue-600/10 p-6 sm:p-8">
           <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div>
-              <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-purple-300">Kontakt & Rechtliches</div>
-              <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">Mehr Informationen auf den Pflichtseiten</h2>
+              <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-purple-300">
+                Kontakt & Rechtliches
+              </div>
+              <h2 className="mb-4 text-2xl font-black text-white sm:text-3xl">
+                Klar und nachvollziehbar
+              </h2>
               <p className="max-w-3xl text-sm leading-8 text-slate-200 sm:text-base">
-                Auf Impressum, Datenschutz und Kontakt findest du die wichtigsten Angaben zur Website, zur verantwortlichen Person und zur Nutzung des Angebots.
+                Informationen zum Betreiber, zum Datenschutz und zu den Kontaktmöglichkeiten findest du auf den verlinkten Seiten. So ist klar erkennbar, wer hinter dem Projekt steht und wie die Website funktioniert.
               </p>
             </div>
             <div className="grid gap-3">
@@ -639,7 +683,7 @@ const App = () => {
         <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-8 text-sm text-slate-400 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="font-semibold text-slate-300">© 2026 NEXUS.core</div>
-            <div>Interaktives KI-Unterhaltungstool für alternative, fiktionale Zukunftsszenarien.</div>
+            <div>Interaktives KI-Unterhaltungstool mit Fokus auf Transparenz und klarer Nutzungskommunikation.</div>
           </div>
           <div className="flex flex-wrap gap-4">
             <a href="/impressum.html" className="transition hover:text-white">Impressum</a>
@@ -667,26 +711,26 @@ const App = () => {
             </button>
 
             <div className="mb-6 border-b border-white/10 pb-4">
-              <div className="text-xs font-bold uppercase tracking-[0.2em] text-purple-300">Transparenz</div>
-              <h3 className="mt-2 text-2xl font-black text-white sm:text-3xl">Was auf dieser Website technisch wirklich passiert</h3>
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-purple-300">
+                Transparenz
+              </div>
+              <h3 className="mt-2 text-2xl font-black text-white sm:text-3xl">
+                Was auf dieser Website technisch passiert
+              </h3>
             </div>
 
             <div className="space-y-5 text-sm leading-8 text-slate-300 sm:text-base">
               <p>
-                NEXUS.core ist ein fiktionales KI-Entertainment-Tool. Deine Eingabe wird an den Server-Endpunkt dieser Website gesendet und von dort zur Generierung
-                an Google Gemini weitergeleitet. Gib deshalb keine sensiblen oder vertraulichen Daten ein.
+                NEXUS.core ist ein fiktionales KI-Unterhaltungstool. Deine Eingabe wird an den eigenen Server-Endpunkt gesendet und von dort an Google Gemini weitergeleitet, damit daraus drei alternative Zeitlinien erzeugt werden können.
               </p>
               <p>
-                Die Website selbst stellt keine Tatsachenbehauptungen oder echten Zukunftsprognosen bereit. Die ausgegebenen Zeitlinien sind automatisch erzeugte,
-                kreative Szenarien und können sachlich falsch oder völlig überzeichnet sein.
+                Gib deshalb keine sensiblen, vertraulichen oder personenbezogenen Inhalte ein, die nicht an externe Dienste weitergegeben werden sollen.
               </p>
               <p>
-                Aktuell sind auf der Website keine Werbeanzeigen eingebunden. Sollte das später geändert werden, muss die Einbindung technisch und
-                datenschutzrechtlich korrekt erfolgen.
+                Die Ausgaben sind automatisiert erzeugte Inhalte und können sachlich falsch, ungenau oder bewusst überzeichnet sein. Sie dienen der Unterhaltung und kreativen Inspiration.
               </p>
               <p>
-                Mehr rechtliche Informationen zur Website, zur verantwortlichen Person und zur Datenverarbeitung findest du im Impressum und in der
-                Datenschutzerklärung.
+                Informationen zum Betreiber, zum Datenschutz und zu den Kontaktmöglichkeiten findest du auf den verlinkten Pflichtseiten dieser Website.
               </p>
             </div>
           </div>
