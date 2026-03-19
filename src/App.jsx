@@ -330,7 +330,7 @@ const App = () => {
     setDecision(nextPrompt);
   };
 
-  const handleAnalyze = async (event) => {
+const handleAnalyze = async (event) => {
     event.preventDefault();
 
     const trimmed = decision.trim();
@@ -340,9 +340,19 @@ const App = () => {
     setErrorMsg('');
     setLoadingProgress(0);
 
+    // === NEU: AUTOMATISCHES SCROLLEN ZUM LADESCREEN ===
+    window.setTimeout(() => {
+      document.getElementById('loading-section')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center', 
+      });
+    }, 100);
+
+
     const progressInterval = window.setInterval(() => {
       setLoadingProgress((prev) => (prev >= 92 ? 92 : prev + Math.floor(Math.random() * 7) + 3));
     }, 260);
+
 
     try {
       const geminiData = await callGeminiAPI(trimmed);
@@ -539,7 +549,7 @@ const App = () => {
           </div>
 
           {step === 'analyzing' && (
-            <div className="mt-12 w-full max-w-xl animate-in zoom-in rounded-[32px] border border-white/10 bg-[#0a0f18]/80 p-8 text-center shadow-2xl backdrop-blur-xl duration-300">
+  <div id="loading-section" className="mt-12 w-full max-w-xl animate-in zoom-in rounded-[32px] border border-white/10 bg-[#0a0f18]/80 p-8 text-center shadow-2xl backdrop-blur-xl duration-300">
               <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-purple-400/30 bg-purple-500/10">
                 <Fingerprint size={32} className="animate-pulse text-purple-300" />
               </div>
