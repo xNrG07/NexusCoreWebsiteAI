@@ -136,6 +136,63 @@ const valuePoints = [
   },
 ];
 
+// === NEU: DATEN FÜR DIE HALL OF FAME ===
+const hallOfFameData = [
+  {
+    original: 'Ich habe heute Kaffee statt Tee getrunken',
+    timelines: [
+      {
+        id: 'ALPHA',
+        type: 'Moderat',
+        title: 'Der produktive Rausch',
+        desc: 'Das ungewohnte Koffein führt zu einem spontanen Motivationsschub. Du beendest ein aufgeschobenes Projekt in Rekordzeit, wirst daraufhin befördert und leitest nun eine Abteilung, die du eigentlich hasst. Dein Stresslevel steigt permanent an.',
+        probability: '12.5 %',
+      },
+      {
+        id: 'BETA',
+        type: 'Eskalierend',
+        title: 'Die Koffein-Verschwörung',
+        desc: 'Dein Körper reagiert überaktiv auf die spezifische Röstung. Du stolperst im Café, rettest dadurch zufällig einen verdeckten Ermittler vor einem fallenden Blumentopf und wirst versehentlich in ein internationales Spionagenetzwerk rekrutiert.',
+        probability: '1 zu 4,2 Mio.',
+      },
+      {
+        id: 'OMEGA',
+        type: 'Kritisch',
+        title: 'Der Riss im Raum-Zeit-Gefüge',
+        desc: 'Die chemische Zusammensetzung des Kaffees interagiert mit deiner DNA. Du schwingst plötzlich auf einer neuen Quantenfrequenz, kannst Gedanken in Form von Farben sehen und wirst von einer intergalaktischen Barista-Sekte als Prophet verehrt.',
+        probability: '1 zu 8,9 Bio.',
+      },
+    ],
+  },
+  {
+    original: 'Ich bin einen anderen Weg nach Hause gegangen',
+    timelines: [
+      {
+        id: 'ALPHA',
+        type: 'Alltäglich',
+        title: 'Die neue Lieblingsbäckerei',
+        desc: 'Du entdeckst eine kleine, unscheinbare Bäckerei. Das Gebäck ist so gut, dass du jeden Tag dorthin gehst. Du nimmst 5 Kilo zu, bist aber signifikant glücklicher und freundest dich mit der Besitzerin an.',
+        probability: '45.2 %',
+      },
+      {
+        id: 'BETA',
+        type: 'Unerwartet',
+        title: 'Der verlorene Hund',
+        desc: 'Auf dem neuen Weg findest du einen entlaufenen Hund. Der Besitzer stellt sich als exzentrischer Tech-Milliardär heraus, der dir aus Dankbarkeit eine Start-up-Finanzierung anbietet, was dein komplettes Berufsleben auf den Kopf stellt.',
+        probability: '1 zu 85 Tsd.',
+      },
+      {
+        id: 'OMEGA',
+        type: 'Paradox',
+        title: 'Das Portal in der Gasse',
+        desc: 'Du biegst falsch ab und landest in einer Gasse, die auf keiner Karte existiert. Du trittst aus dem Nebel und befindest dich im Jahr 1998. Du musst nun dein Leben neu aufbauen, bist aber der Einzige, der den Aufstieg des Internets exakt vorhersagen kann.',
+        probability: '1 zu 24,5 Bio.',
+      },
+    ],
+  },
+];
+// === ENDE NEUE DATEN ===
+
 const colorMap = {
   ALPHA: {
     ring: 'border-emerald-500/40',
@@ -331,6 +388,8 @@ const App = () => {
           <nav className="hidden items-center gap-5 text-xs font-bold uppercase tracking-[0.16em] text-slate-400 md:flex">
             <a href="#tool" className="transition-colors hover:text-white">Tool</a>
             <a href="#was-ist-das" className="transition-colors hover:text-white">Überblick</a>
+            {/* HIER WURDE DER LINK ZUM ARCHIV EINGEFÜGT */}
+            <a href="#archiv" className="transition-colors hover:text-white">Archiv</a>
             <a href="#faq" className="transition-colors hover:text-white">FAQ</a>
             <a href="/kontakt.html" className="transition-colors hover:text-white">Kontakt</a>
           </nav>
@@ -574,6 +633,65 @@ const App = () => {
             );
           })}
         </section>
+
+        {/* === NEUE SEKTION: ARCHIV DER ANOMALIEN (Hall of Fame) === */}
+        <section id="archiv" className="rounded-[32px] border border-white/5 bg-[#0a0f18] p-8 sm:p-12">
+          <div className="mb-10 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-fuchsia-400">Hall of Fame</div>
+            <h2 className="text-3xl font-black text-white sm:text-4xl">Archiv der Anomalien</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-400">
+              Ein Blick in unsere Datenbank der denkwürdigsten Simulationen. Diese Beispiele zeigen, wie selbst kleinste Entscheidungen das Multiversum ins Chaos stürzen können.
+            </p>
+          </div>
+
+          <div className="space-y-12">
+            {hallOfFameData.map((item, idx) => (
+              <div key={idx} className="space-y-6 rounded-3xl border border-white/5 bg-black/40 p-6 sm:p-8">
+                <div className="text-center">
+                  <div className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+                    Ausgangsaktion
+                  </div>
+                  <div className="text-lg font-semibold italic text-white sm:text-xl">
+                    „{item.original}“
+                  </div>
+                </div>
+
+                <div className="grid gap-4 lg:grid-cols-3">
+                  {item.timelines.map((timeline) => {
+                    const scheme = colorMap[timeline.id] || colorMap.ALPHA;
+                    return (
+                      <article
+                        key={timeline.id}
+                        className={`group relative flex flex-col overflow-hidden rounded-2xl border bg-[#0a0f18] p-5 shadow-lg transition-all hover:-translate-y-1 sm:p-6 ${scheme.ring}`}
+                      >
+                        <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-20 transition-opacity group-hover:opacity-40 ${scheme.glow}`} />
+                        <div className="relative flex h-full flex-col">
+                          <div className="mb-4">
+                            <div className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.2em] ${scheme.badge}`}>
+                              <span className="h-1 w-1 rounded-full bg-current" /> {timeline.id}
+                            </div>
+                          </div>
+                          <h4 className={`mb-2 text-lg font-black leading-tight ${scheme.text}`}>
+                            {timeline.title}
+                          </h4>
+                          <p className="mb-6 text-sm leading-relaxed text-slate-300">
+                            {timeline.desc}
+                          </p>
+                          <div className="mt-auto border-t border-white/5 pt-3">
+                            <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">
+                              Eintrittswahrscheinlichkeit: <span className="text-white">{timeline.probability}</span>
+                            </span>
+                          </div>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+        {/* === ENDE NEUE SEKTION === */}
 
         <section id="faq" className="rounded-[32px] border border-white/5 bg-[#0a0f18] p-8 sm:p-12">
           <div className="mb-10 text-center">
