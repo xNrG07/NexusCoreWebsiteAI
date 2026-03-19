@@ -40,6 +40,16 @@ const json = (res, status, body) => {
 };
 
 export default async function handler(req, res) {
+  // CORS Header hinzufügen (falls Frontend und Backend mal getrennt sind)
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // OPTIONS Request (Preflight) für Browser direkt beantworten
+  if (req.method === 'OPTIONS') {
+    return json(res, 200, {});
+  }
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return json(res, 405, { error: 'Nur POST ist erlaubt.' });
@@ -84,7 +94,10 @@ export default async function handler(req, res) {
       return json(res, 502, { error: 'Gemini hat keine verwertbare Antwort geliefert.' });
     }
 
-    const parsed = JSON.parse(text);
+    // SICHERHEITSNETZ: Entfernt "```json" und "```", falls die KI Markdown mitsendet
+    const cleanText = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+    
+    const parsed = JSON.parse(cleanText);
     return json(res, 200, parsed);
   } catch (error) {
     return json(res, 500, {
