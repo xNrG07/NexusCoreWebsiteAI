@@ -20,74 +20,28 @@ import {
   Zap,
 } from 'lucide-react';
 
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-
 const callGeminiAPI = async (decision) => {
-  if (!apiKey) {
-    throw new Error(
-      'Kein Gemini-API-Key gefunden. Lege lokal eine VITE_GEMINI_API_KEY in deiner .env an oder hinterlege die Variable im Hosting.'
-    );
-  }
-
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`;
-
-  const payload = {
-    contents: [{ parts: [{ text: `Initiale Aktion: "${decision}"` }] }],
-    systemInstruction: {
-      parts: [
-        {
-          text:
-            'Du bist NEXUS, ein kreativer Schmetterlingseffekt-Simulator. Der Nutzer gibt eine kleine, alltägliche Aktion ein. Erschaffe 3 alternative Zeitlinien, die durch diese Aktion ausgelöst werden. Regeln: 1) ALPHA = realistische, aber überraschende direkte Folge. 2) BETA = absurde Kettenreaktion. 3) OMEGA = surreales, futuristisches oder kosmisches Ereignis. Jede Zeitlinie braucht id, type, title, desc und probability als String. Antworte strikt als JSON.',
-        },
-      ],
-    },
-    generationConfig: {
-      responseMimeType: 'application/json',
-      responseSchema: {
-        type: 'OBJECT',
-        properties: {
-          timelines: {
-            type: 'ARRAY',
-            items: {
-              type: 'OBJECT',
-              properties: {
-                id: { type: 'STRING' },
-                type: { type: 'STRING' },
-                title: { type: 'STRING' },
-                desc: { type: 'STRING' },
-                probability: { type: 'STRING' },
-              },
-              required: ['id', 'type', 'title', 'desc', 'probability'],
-            },
-          },
-        },
-        required: ['timelines'],
-      },
-    },
-  };
-
   const delays = [1000, 2000, 4000, 8000];
 
   for (let i = 0; i <= delays.length; i += 1) {
     try {
-      const response = await fetch(url, {
+      const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ decision }),
       });
 
+      const data = await response.json().catch(() => ({}));
+
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+        throw new Error(data?.error || `HTTP ${response.status}`);
       }
 
-      const data = await response.json();
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-      if (!text) {
+      if (!data?.timelines) {
         throw new Error('Die API hat keine verwertbare Antwort zurückgegeben.');
       }
 
-      return JSON.parse(text);
+      return data;
     } catch (error) {
       if (i === delays.length) throw error;
       await new Promise((resolve) => setTimeout(resolve, delays[i]));
@@ -367,7 +321,7 @@ const App = () => {
             </div>
             <div className="space-y-3 text-sm leading-7 text-slate-300">
               <p>Bitte keine sensiblen persönlichen Daten, Zugangsdaten, Gesundheitsdaten oder vertraulichen Inhalte eingeben.</p>
-              <p>Die eingegebenen Texte werden für die Generierung an Google Gemini übermittelt. Die Ergebnisse sind fiktional und können sachlich falsch sein.</p>
+              <p>Die eingegebenen Texte werden für die Generierung serverseitig an Google Gemini übermittelt. Die Ergebnisse sind fiktional und können sachlich falsch sein.</p>
               <p>Aktuell sind weder AdSense noch Analyse-Skripte aktiv eingebunden. Werbung sollte erst nach Freigabe und sauberer Consent-Lösung live gehen.</p>
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -560,7 +514,7 @@ const App = () => {
             <div className="space-y-4">
               {[
                 'Du gibst eine kurze Alltagshandlung ein.',
-                'Die Eingabe wird an Google Gemini gesendet und als strukturierte JSON-Antwort verarbeitet.',
+                'Die Eingabe wird an den eigenen Server-Endpunkt gesendet, dort sicher an Google Gemini weitergeleitet und als strukturierte JSON-Antwort verarbeitet.',
                 'NEXUS formatiert daraus drei lesbare Zeitlinien mit unterschiedlichen Eskalationsstufen.',
               ].map((item, index) => (
                 <div key={item} className="flex gap-4 rounded-2xl border border-white/10 bg-black/20 p-4">
