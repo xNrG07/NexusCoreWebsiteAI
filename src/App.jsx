@@ -152,7 +152,7 @@ const hallOfFameData = [
         id: 'BETA',
         type: 'Eskalierend',
         title: 'Der singende Dackel und das Kultgetränk',
-        desc: 'Die zittrige Hand durch den Koffeinüberschuss lässt dich beim Gießen einer Pflanze Wasser auf ein altes Radio tropfen. Das Radio empfängt daraufhin nur noch eine bizarre statische Frequenz, die wie ein melodisches Jaulen klingt. Ein Nachbar, dessen Dackel genau auf diese Frequenz mit herzzerreißendem Gesang reagiert, glaubt, er hätte ein 'universelles Frequenzband' entdeckt. Er gründet einen kleinen Kult, der sich nur von Redbull ernährt, um 'die Schwingungen zu spüren' und seinen Dackel als Orakel verehrt.',
+        desc: 'Die zittrige Hand durch den Koffeinüberschuss lässt dich beim Gießen einer Pflanze Wasser auf ein altes Radio tropfen. Das Radio empfängt daraufhin nur noch eine bizarre statische Frequenz, die wie ein melodisches Jaulen klingt. Ein Nachbar, dessen Dackel genau auf diese Frequenz mit herzzerreißendem Gesang reagiert, glaubt, er hätte ein "universelles Frequenzband" entdeckt. Er gründet einen kleinen Kult, der sich nur von Redbull ernährt, um "die Schwingungen zu spüren" und seinen Dackel als Orakel verehrt.',
         probability: '12.0 %',
       },
       {
