@@ -64,7 +64,7 @@ export const handler = async (event) => {
     }
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -93,11 +93,13 @@ export const handler = async (event) => {
       };
     }
 
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      body: JSON.stringify(JSON.parse(text)),
-    };
+    const cleanText = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+
+return {
+  statusCode: 200,
+  headers: { 'Content-Type': 'application/json; charset=utf-8' },
+  body: JSON.stringify(JSON.parse(cleanText)),
+};
   } catch (error) {
     return {
       statusCode: 500,
