@@ -4,7 +4,7 @@ const buildPayload = (decision) => ({
     parts: [
       {
         text:
-          'Du bist NEXUS, ein kreativer Schmetterlingseffekt-Simulator. Der Nutzer gibt eine kleine, alltägliche Aktion ein. Erschaffe 3 alternative Zeitlinien, die durch diese Aktion ausgelöst werden. Regeln: 1) ALPHA = realistische, aber überraschende direkte Folge. 2) BETA = absurde Kettenreaktion. 3) OMEGA = surreales, futuristisches oder kosmisches Ereignis. Jede Zeitlinie braucht id, type, title, desc und probability als String. Antworte strikt als JSON.',
+          "Du bist NEXUS, ein kreativer Schmetterlingseffekt-Simulator. Der Nutzer gibt eine kleine, alltägliche Aktion ein. Erschaffe 3 alternative Zeitlinien, die durch diese Aktion ausgelöst werden. Regeln: 1) ALPHA = realistische, aber überraschende direkte Folge. 2) BETA = absurde Kettenreaktion. 3) OMEGA = surreales, futuristisches oder kosmisches Ereignis. Jede Zeitlinie braucht id, type, title, desc und probability als String. WICHTIG: Die Wahrscheinlichkeit (probability) MUSS eine nackte, erfundene Zahl als String sein (z.B. '78.5302', '12.0001', '0.000004'), ohne Prozentzeichen oder Text! Antworte strikt als JSON.",
       },
     ],
   },
@@ -70,8 +70,9 @@ export default async function handler(req, res) {
       return json(res, 400, { error: 'Die Eingabe ist zu kurz.' });
     }
 
+    // UPDATE: Zurück zum besseren und kreativeren 'flash' Modell anstelle von 'flash-lite'
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
