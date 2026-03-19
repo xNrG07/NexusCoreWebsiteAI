@@ -786,41 +786,31 @@ const App = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-3">
               {[
-                { href: '/impressum.html', label: 'Impressum öffnen' },
-                { href: '/datenschutz.html', label: 'Datenschutz öffnen' },
-                { href: '/kontakt.html', label: 'Kontakt öffnen' },
-                { href: '/ueber-nexus-core.html', label: 'Über NEXUS.core' },
-                { href: '/so-entstehen-die-ergebnisse.html', label: 'So entstehen die Ergebnisse' },
-                { href: '/kuratierte-beispiele.html', label: 'Kuratierte Beispiele' },
-              ].map((link) => (
+  { href: '/impressum.html', label: 'Impressum öffnen' },
+  { href: '/datenschutz.html', label: 'Datenschutz öffnen' },
+  { href: '/kontakt.html', label: 'Kontakt öffnen' },
+  { href: '/ueber-nexus-core.html', label: 'Über NEXUS.core' },
+  { href: '/so-entstehen-die-ergebnisse.html', label: 'So entstehen die Ergebnisse' },
+  { href: '/kuratierte-beispiele.html', label: 'Kuratierte Beispiele' },
+].map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="group relative flex items-center justify-between overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] px-5 py-3.5 text-sm font-semibold text-slate-300 shadow-sm transition-all duration-300 hover:border-purple-500/25 hover:bg-purple-500/[0.06] hover:text-white hover:shadow-purple-950/40"
+                  className="inline-flex items-center justify-between rounded-2xl border border-white/10 bg-black/40 px-6 py-4 text-sm font-bold text-white transition hover:border-purple-500/50 hover:bg-black/60"
                 >
-                  {/* shimmer on hover */}
-                  <span className="pointer-events-none absolute inset-x-0 top-0 h-px w-0 bg-gradient-to-r from-transparent via-purple-400/50 to-transparent transition-all duration-500 group-hover:w-full" />
-                  <span className="tracking-wide">{link.label}</span>
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-white/0 text-slate-600 transition-all duration-300 group-hover:border-purple-500/30 group-hover:bg-purple-500/15 group-hover:text-purple-300">
-                    <ExternalLink size={12} />
-                  </span>
+                  <span>{link.label}</span>
+                  <ExternalLink size={16} className="text-slate-500" />
                 </a>
               ))}
-
-              {/* Primary CTA */}
               <button
                 type="button"
                 onClick={() => setModal('transparenz')}
-                className="group relative mt-1 flex items-center justify-between overflow-hidden rounded-2xl border border-purple-500/40 bg-gradient-to-r from-purple-600/70 to-violet-600/70 px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-purple-900/25 transition-all duration-300 hover:border-purple-400/60 hover:from-purple-500/80 hover:to-violet-500/80 hover:shadow-purple-800/40"
+                className="inline-flex items-center justify-between rounded-2xl border border-purple-500/30 bg-purple-500/20 px-6 py-4 text-sm font-bold text-purple-100 transition hover:bg-purple-500/30"
               >
-                {/* shimmer sweep */}
-                <span className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 group-hover:translate-x-[200%]" />
-                <span className="tracking-wide">Detaillierte Nutzung lesen</span>
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/15 transition-all duration-300 group-hover:bg-white/25 group-hover:translate-x-0.5">
-                  <ArrowRight size={13} />
-                </span>
+                <span>Detaillierte Nutzung lesen</span>
+                <ArrowRight size={16} />
               </button>
             </div>
           </div>
