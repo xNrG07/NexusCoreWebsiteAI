@@ -38,41 +38,49 @@
         display: inline-block;
         margin-bottom: 16px;
       }
-      form {
+      .grid {
         display: grid;
-        gap: 14px;
-        margin-top: 12px;
+        gap: 16px;
       }
       label {
-        display: grid;
-        gap: 6px;
-        font-weight: 600;
+        display: block;
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #d9ddf1;
       }
       input, textarea {
         width: 100%;
         box-sizing: border-box;
-        border: 1px solid rgba(255,255,255,0.14);
         border-radius: 14px;
-        padding: 12px 14px;
+        border: 1px solid rgba(255,255,255,0.12);
         background: rgba(255,255,255,0.04);
         color: #eef2ff;
+        padding: 14px 16px;
         font: inherit;
       }
       textarea {
-        min-height: 150px;
+        min-height: 160px;
         resize: vertical;
       }
       button {
         border: 0;
-        border-radius: 14px;
-        padding: 12px 16px;
-        background: #c4b5fd;
-        color: #111827;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #c4b5fd, #60a5fa);
+        color: #071018;
         font: inherit;
         font-weight: 700;
+        padding: 14px 20px;
         cursor: pointer;
       }
-      .note { color: #b9c1d6; font-size: 14px; }
+      .hint {
+        color: #b9c1d6;
+        font-size: 14px;
+      }
+      .status {
+        margin-top: 12px;
+        font-size: 14px;
+        color: #b9c1d6;
+      }
     </style>
   </head>
   <body>
@@ -83,41 +91,49 @@
 
       <div class="card">
         <h2>Allgemeine Anfragen</h2>
-        <p>Für Hinweise, Rückmeldungen oder rechtliche Anfragen erreichen Sie den Betreiber unter:</p>
         <p>
-          <strong>Peter Markelic</strong><br />
-          Richtstraße 13c<br />
-          9500 Villach<br />
-          Österreich
+          Für Hinweise, Rückmeldungen oder rechtliche Anfragen erreichen Sie den Betreiber unter:
         </p>
         <p>
           <strong>E-Mail:</strong> <a href="mailto:peter.markelic1@gmail.com">peter.markelic1@gmail.com</a>
+        </p>
+        <p>
+          <strong>Kontaktformular:</strong> Nutzen Sie alternativ das Formular weiter unten auf dieser Seite.
         </p>
       </div>
 
       <div class="card">
         <h2>Kontaktformular</h2>
-        <p>
-          Sie können alternativ auch dieses Formular verwenden. Beim Absenden wird Ihr lokales E-Mail-Programm mit den eingegebenen Daten geöffnet.
-          Falls sich kein E-Mail-Programm öffnet, verwenden Sie bitte die oben angegebene E-Mail-Adresse direkt.
+        <p class="hint">
+          Das Formular öffnet Ihr Standard-Mailprogramm mit einer vorausgefüllten Nachricht an den Betreiber. Bitte geben Sie keine sensiblen Daten ein.
         </p>
 
         <form id="contactForm">
-          <label>
-            Name
-            <input type="text" id="name" name="name" maxlength="120" required />
-          </label>
-          <label>
-            E-Mail
-            <input type="email" id="email" name="email" maxlength="160" required />
-          </label>
-          <label>
-            Nachricht
-            <textarea id="message" name="message" maxlength="3000" required></textarea>
-          </label>
-          <button type="submit">Nachricht vorbereiten</button>
+          <div class="grid">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" maxlength="120" required />
+            </div>
+            <div>
+              <label for="email">E-Mail</label>
+              <input id="email" name="email" type="email" maxlength="160" required />
+            </div>
+            <div>
+              <label for="subject">Betreff</label>
+              <input id="subject" name="subject" type="text" maxlength="160" required />
+            </div>
+            <div>
+              <label for="message">Nachricht</label>
+              <textarea id="message" name="message" maxlength="3000" required></textarea>
+            </div>
+          </div>
+
+          <div style="margin-top: 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <button type="submit">Nachricht vorbereiten</button>
+            <span class="hint">Es werden keine Formulardaten serverseitig gespeichert.</span>
+          </div>
+          <div id="status" class="status" aria-live="polite"></div>
         </form>
-        <p class="note">Es erfolgt kein direkter Versand über einen Server dieser Website.</p>
       </div>
 
       <div class="card">
@@ -130,24 +146,29 @@
     </div>
 
     <script>
-      document.getElementById('contactForm').addEventListener('submit', function (event) {
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('status');
+
+      form.addEventListener('submit', (event) => {
         event.preventDefault();
+
         const name = document.getElementById('name').value.trim();
         const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
         const message = document.getElementById('message').value.trim();
 
-        const subject = encodeURIComponent('Kontaktanfrage über NEXUS.core');
-        const body = encodeURIComponent(
-          'Name: ' + name + '
-' +
-          'E-Mail: ' + email + '
+        const body = [
+          `Name: ${name}`,
+          `E-Mail: ${email}`,
+          '',
+          'Nachricht:',
+          message,
+        ].join('
+');
 
-' +
-          'Nachricht:
-' + message
-        );
-
-        window.location.href = 'mailto:peter.markelic1@gmail.com?subject=' + subject + '&body=' + body;
+        const mailto = `mailto:peter.markelic1@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailto;
+        status.textContent = 'Falls sich kein Mailprogramm öffnet, schreiben Sie bitte direkt an peter.markelic1@gmail.com.';
       });
     </script>
   </body>
