@@ -183,12 +183,16 @@ const App = () => {
 
       const mappedTimelines = (geminiData?.timelines || []).slice(0, 3).map((timeline, index) => {
         const mappedId = ['ALPHA', 'BETA', 'OMEGA'][index] || timeline.id || `TL-${index}`;
+        const rawProbability = Number.parseFloat(String(timeline.probability).replace(',', '.'));
         return {
           id: mappedId,
           type: timeline.type || mappedId,
           title: timeline.title || `Zeitlinie ${index + 1}`,
           desc: timeline.desc || 'Keine Beschreibung verfügbar.',
           probability: formatProbability(timeline.probability),
+          probabilityTooltip: Number.isNaN(rawProbability)
+            ? 'Von der KI gelieferter Prozentwert nicht verfügbar'
+            : `Von der KI gelieferter Prozentwert: ${rawProbability}%`,
         };
       });
 
@@ -495,7 +499,12 @@ const App = () => {
                           <span className="font-bold uppercase tracking-[0.14em] text-slate-400">
                             Einordnung
                           </span>
-                          <span className="font-black text-white">{timeline.probability}</span>
+                          <span
+                            className="cursor-help border-b border-dashed border-white/40 pb-0.5 font-black text-white transition-colors hover:border-white"
+                            title={timeline.probabilityTooltip}
+                          >
+                            {timeline.probability}
+                          </span>
                         </div>
                       </div>
                     </article>
