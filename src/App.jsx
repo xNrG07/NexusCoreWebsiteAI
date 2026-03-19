@@ -191,6 +191,8 @@ const App = () => {
           title: timeline.title || `Zeitlinie ${index + 1}`,
           desc: timeline.desc || 'Keine Beschreibung verfügbar.',
           probability: formatProbability(timeline.probability),
+          // --- HIER WURDE DIE EXAKTE WAHRSCHEINLICHKEIT WIEDER HINZUGEFÜGT ---
+          exactProbability: `Exakte mathematische Chance: ${timeline.probability}%`,
         };
       });
 
@@ -462,9 +464,16 @@ const App = () => {
                         </div>
                         <h3 className={`mb-4 text-2xl font-black leading-tight ${scheme.text}`}>{timeline.title}</h3>
                         <p className="mb-5 text-sm leading-7 text-slate-300">{timeline.desc}</p>
+                        
+                        {/* --- HIER WURDE DER HOVER-TOOLTIP EINGEBAUT --- */}
                         <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm">
                           <span className="font-bold uppercase tracking-[0.14em] text-slate-400">Chance</span>
-                          <span className="font-black text-white">{timeline.probability}</span>
+                          <span 
+                            className="cursor-help border-b border-dashed border-white/40 pb-0.5 font-black text-white transition-colors hover:border-white"
+                            title={timeline.exactProbability}
+                          >
+                            {timeline.probability}
+                          </span>
                         </div>
                       </div>
                     </article>
