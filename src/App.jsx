@@ -722,10 +722,13 @@ const App = () => {
 
             <div className="grid gap-3">
               {[
-                { href: '/impressum.html', label: 'Impressum öffnen' },
-                { href: '/datenschutz.html', label: 'Datenschutz öffnen' },
-                { href: '/kontakt.html', label: 'Kontakt öffnen' },
-              ].map((link) => (
+  { href: '/impressum.html', label: 'Impressum öffnen' },
+  { href: '/datenschutz.html', label: 'Datenschutz öffnen' },
+  { href: '/kontakt.html', label: 'Kontakt öffnen' },
+  { href: '/ueber-nexus-core.html', label: 'Über NEXUS.core' },
+  { href: '/so-entstehen-die-ergebnisse.html', label: 'So entstehen die Ergebnisse' },
+  { href: '/kuratierte-beispiele.html', label: 'Kuratierte Beispiele' },
+].map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
@@ -758,6 +761,9 @@ const App = () => {
             <a href="/impressum.html" className="transition hover:text-white">Impressum</a>
             <a href="/datenschutz.html" className="transition hover:text-white">Datenschutz</a>
             <a href="/kontakt.html" className="transition hover:text-white">Kontakt</a>
+            <a href="/ueber-nexus-core.html" className="transition hover:text-white">Über NEXUS.core</a>
+<a href="/so-entstehen-die-ergebnisse.html" className="transition hover:text-white">So entstehen die Ergebnisse</a>
+<a href="/kuratierte-beispiele.html" className="transition hover:text-white">Kuratierte Beispiele</a>
           </div>
         </div>
       </footer>
